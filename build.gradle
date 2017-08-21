@@ -1,0 +1,21 @@
+group 'se.lovef'
+version '0.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    version = rootProject.version
+    group = rootProject.group
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
