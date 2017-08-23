@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lovef/kotlin-assert-utils.svg?branch=master)](https://travis-ci.org/lovef/kotlin-assert-utils)
+
 # Kotlin assert utils
 
 A set of assert utilities for JUnit testing with Kotlin
