@@ -1,5 +1,5 @@
 group 'se.lovef'
-version '0.0-SNAPSHOT'
+version resolveVersionString()
 
 buildscript {
     repositories {
@@ -18,4 +18,63 @@ allprojects {
         mavenLocal()
         mavenCentral()
     }
+}
+
+//noinspection GroovyAssignabilityCheck
+task releaseTag {
+    doLast {
+        def currentReleaseTags = getCurrentReleaseTags()
+        if (!currentReleaseTags.isEmpty()) {
+            def currentTags = currentReleaseTags.join(' ')
+            println "Current tags: $currentTags"
+            println "delete with:  git tag --delete $currentTags"
+            println()
+            println "... do nothing"
+            return
+        }
+        def prefix = "v$baseVersion."
+        def tags = execForOutput('git', 'tag', '-l', "$prefix*")
+                .split('\n')
+                .findAll { !it.isEmpty() }
+        def nextPatch = tags
+                .collect { it.substring(prefix.length()).replaceFirst(/\D.+/, '') }
+                .findAll { !it.isEmpty() }
+                .collect { Integer.parseInt(it) }
+                .max()?.with { it + 1 } ?: 0
+        def tag = "$prefix$nextPatch"
+        println execForOutput('git', 'tag', tag)
+
+        println "Created tag $tag"
+        println "To delete:  git tag --delete $tag"
+        println "To push:    git push origin $tag"
+        println()
+        println "Version: " + resolveVersionString()
+    }
+}
+
+private resolveVersionString() {
+    def currentReleaseTags = getCurrentReleaseTags()
+    if (currentReleaseTags.isEmpty()) {
+        return "$baseVersion-SNAPSHOT"
+    }
+    else if (currentReleaseTags.size() == 1) {
+        return currentReleaseTags.first().replaceFirst(/^v/, '')
+    } else {
+        throw new Exception("To manny release tags: $currentReleaseTags")
+    }
+}
+
+private ArrayList<String> getCurrentReleaseTags() {
+    execForOutput('git', 'tag', '--points-at', 'HEAD')
+            .split('\n')
+            .findAll { it != null && it.matches(/v\d+.+/) }
+}
+
+String execForOutput(String... arguments) {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine arguments
+        standardOutput = stdout
+    }
+    return stdout.toString()
 }
