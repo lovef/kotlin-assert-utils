@@ -4,4 +4,16 @@ jdk:
   - oraclejdk8
 
 before_install:
- - chmod +x gradlew
+  - chmod +x gradlew
+
+before_deploy:
+  - ./gradlew bintray
+
+deploy:
+  provider: bintray
+  file: "kotlin-assert-utils/build/bintray/descriptor.json"
+  user: $BINTRAY_API_USER
+  key: $BINTRAY_API_KEY
+  dry-run: false
+  on:
+    tags: true
