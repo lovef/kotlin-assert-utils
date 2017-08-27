@@ -16,14 +16,9 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-before_deploy:
-  - ./gradlew bintray
-
 deploy:
-  provider: bintray
-  file: "kotlin-assert-utils/build/bintray/descriptor.json"
-  user: $BINTRAY_API_USER
-  key: $BINTRAY_API_KEY
-  dry-run: false
+  provider: script
+  script: ./gradlew clean bintrayUpload
+  skip_cleanup: true
   on:
     tags: true
