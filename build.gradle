@@ -53,12 +53,17 @@ task releaseTag {
 }
 
 private resolveVersionString() {
+    def currentReleaseTags = getReleaseTag()
+    return currentReleaseTags?.replaceFirst(/^v/, '') ?: "$baseVersion-SNAPSHOT"
+}
+
+private String getReleaseTag() {
     def currentReleaseTags = getCurrentReleaseTags()
     if (currentReleaseTags.isEmpty()) {
-        return "$baseVersion-SNAPSHOT"
+        return null
     }
     else if (currentReleaseTags.size() == 1) {
-        return currentReleaseTags.first().replaceFirst(/^v/, '')
+        return currentReleaseTags.first()
     } else {
         throw new Exception("To manny release tags: $currentReleaseTags")
     }
