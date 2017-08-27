@@ -1,3 +1,5 @@
+import java.util.regex.Pattern
+
 group 'se.lovef'
 version resolveVersionString()
 
@@ -70,12 +72,13 @@ private String getReleaseTag() {
 }
 
 private ArrayList<String> getCurrentReleaseTags() {
+    def releaseTagPattern = Pattern.quote("v$baseVersion.") + /\d+/
     execForOutput('git', 'tag', '--points-at', 'HEAD')
             .split('\n')
-            .findAll { it != null && it.matches(/v\d+.+/) }
+            .findAll { it != null && it.matches(releaseTagPattern) }
 }
 
-String execForOutput(String... arguments) {
+private String execForOutput(String... arguments) {
     def stdout = new ByteArrayOutputStream()
     exec {
         commandLine arguments
