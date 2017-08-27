@@ -4,7 +4,9 @@
 
 A set of assert utilities for JUnit testing with Kotlin
 
-``` Kotlin
+## Example
+
+``` kotlin
 this typeIs Any::class
 
 1 isEqualTo 1
@@ -22,4 +24,18 @@ null.isNull()
 { "1 is 2" proof { 1 isEqualTo 2 } }
         .throws(Error::class)
         .message isEqualTo "1 is 2"
+```
+
+## Setup
+
+``` gradle
+dependencies {
+    ...
+    testCompile 'se.lovef:kotlin-assert-utils:0.0.1'
+}
+
+repositories {
+    ...
+    jcenter()
+}
 ```
