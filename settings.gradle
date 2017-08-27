@@ -1,1 +1,2 @@
-include ':kotlin-assert-utils'
+include ':kotlin-assert-utils',
+        ':example'
