@@ -277,4 +277,13 @@ class AssertUtilTest {
     @Test fun `proof in a expression body`() = "A proof can be done in a expression body" proof {
         1 isEqualTo 1
     }
+
+    @Test fun `assert that is valid eventually`() {
+        System.currentTimeMillis().let {
+            eventually { System.currentTimeMillis() - it isGreaterOrEqualTo 100L }
+        }
+        System.currentTimeMillis().let {
+            { eventually { System.currentTimeMillis() - it isGreaterThan 200L } } throws Error::class
+        }
+    }
 }

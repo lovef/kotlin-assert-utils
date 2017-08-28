@@ -6,6 +6,8 @@ import org.hamcrest.core.IsInstanceOf
 import org.intellij.lang.annotations.Language
 import org.junit.Assert.assertTrue
 import java.util.*
+import kotlin.concurrent.schedule
+import kotlin.concurrent.thread
 import kotlin.reflect.KClass
 
 /*
@@ -163,4 +165,17 @@ infix fun String.proof(proof: () -> Unit) {
     } catch (throwable: Throwable) {
         throw AssertionError(this, throwable)
     }
+}
+
+fun eventually(block: () -> Unit) {
+    var thrown: Throwable? = null
+    thread {
+        try {
+            Thread.sleep(100)
+            block()
+        } catch (t: Throwable) {
+            thrown = t
+        }
+    }.join()
+    thrown?.let { throw it }
 }
