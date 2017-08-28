@@ -31,7 +31,7 @@ null.isNull()
 ``` gradle
 dependencies {
     ...
-    testCompile 'se.lovef:kotlin-assert-utils:0.0.1'
+    testCompile 'se.lovef:kotlin-assert-utils:0.0.2'
 }
 
 repositories {
