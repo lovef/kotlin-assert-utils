@@ -27,5 +27,8 @@ class ExampleTest {
         { "1 is 2" proof { 1 isEqualTo 2 } }
                 .throws(Error::class)
                 .message isEqualTo "1 is 2"
+
+        true.isTrue();
+        { null.isTrue() } throws Error::class
     }
 }
