@@ -195,12 +195,14 @@ class AssertUtilTest {
         true.isTrue()
         true.isTrue() referenceIsEqualTo true
         { false.isTrue() } throws Error::class
+        { null.isTrue() } throws Error::class
     }
 
     @Test fun `is false`() {
         false.isFalse()
         false.isFalse() referenceIsEqualTo false
         { true.isFalse() } throws Error::class
+        { null.isFalse() } throws Error::class
     }
 
     @Test fun `is less than`() {

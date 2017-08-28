@@ -111,9 +111,9 @@ fun <T : Any> T?.isNull() = apply { this isEqualTo null }
 
 fun <T : Any> T?.isNotNull() = apply { this isNotEqualTo null }!!
 
-fun Boolean.isTrue() = apply { this isEqualTo true }
+fun Boolean?.isTrue() = apply { this isEqualTo true }
 
-fun Boolean.isFalse() = apply { this isEqualTo false }
+fun Boolean?.isFalse() = apply { this isEqualTo false }
 
 infix fun <T : Any> T?.referenceIsEqualTo(other: T?) = apply {
     assertTrue("\n" +
