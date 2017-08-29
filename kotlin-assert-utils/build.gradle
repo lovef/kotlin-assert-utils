@@ -16,6 +16,17 @@ task sourceJar(type: Jar) {
     from sourceSets.main.allSource
 }
 
+sourceSets {
+    javadoc { resources { srcDir 'src/main/javadoc' } }
+}
+
+/** Creates a javadoc jar with README to comply with Sonatypes requirements:
+ * http://central.sonatype.org/pages/requirements.html */
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from sourceSets.javadoc.output
+}
+
 def info = [
         "github": "https://github.com/lovef/kotlin-assert-utils",
         "git"   : "https://github.com/lovef/kotlin-assert-utils.git",
@@ -27,7 +38,8 @@ def mavenDir = "$buildDir/maven"
 publishing {
     publications {
         maven(MavenPublication) {
-            artifact(sourceJar)
+            artifact sourceJar
+            artifact javadocJar
             from components.java
             pom.withXml {
                 asNode().children().last() + {
