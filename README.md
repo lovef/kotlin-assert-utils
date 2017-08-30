@@ -31,11 +31,11 @@ null.isNull()
 ``` gradle
 dependencies {
     ...
-    testCompile 'se.lovef:kotlin-assert-utils:0.0.2'
+    testCompile 'se.lovef:kotlin-assert-utils:0.0.3'
 }
 
 repositories {
     ...
-    jcenter()
+    mavenCentral()
 }
 ```
