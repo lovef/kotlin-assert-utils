@@ -42,6 +42,10 @@ publishing {
             artifact javadocJar
             from components.java
             pom.withXml {
+                def kotlinVersionRange = "[$kotlin_version,2.0)"
+                asNode().dependencies.'*'
+                        .find { it.artifactId.text() == 'kotlin-stdlib' }
+                        .with { it.version*.value = kotlinVersionRange }
                 asNode().children().last() + {
                     resolveStrategy = Closure.DELEGATE_FIRST
                     name project.name
