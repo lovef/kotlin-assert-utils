@@ -6,7 +6,7 @@ A set of assert utilities for JUnit testing with Kotlin
 
 ## Example
 
-``` kotlin
+```kotlin
 this typeIs Any::class
 
 1 isEqualTo 1
@@ -19,11 +19,14 @@ this typeIs Any::class
 "my awesome string" doesNotContain "shit"
 
 null.isNull()
-"123".isNotNull().length isEqualTo 3
+("123" as String?).isNotNull().length isEqualTo 3
 
 { "1 is 2" proof { 1 isEqualTo 2 } }
         .throws(Error::class)
         .message isEqualTo "1 is 2"
+
+true.isTrue();
+{ null.isTrue() } throws Error::class
 ```
 
 ## Setup
@@ -31,7 +34,7 @@ null.isNull()
 ``` gradle
 dependencies {
     ...
-    testCompile 'se.lovef:kotlin-assert-utils:0.0.3'
+    testCompile 'se.lovef:kotlin-assert-utils:0.1.1'
 }
 
 repositories {

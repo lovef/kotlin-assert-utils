@@ -22,7 +22,7 @@ class ExampleTest {
         "my awesome string" doesNotContain "shit"
 
         null.isNull()
-        "123".isNotNull().length isEqualTo 3
+        ("123" as String?).isNotNull().length isEqualTo 3
 
         { "1 is 2" proof { 1 isEqualTo 2 } }
                 .throws(Error::class)
