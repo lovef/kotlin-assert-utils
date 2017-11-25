@@ -15,6 +15,19 @@ class AssertUtilTest {
         { this typeIs Int::class } throws Error::class
     }
 
+    @Test fun `type is returns correct type`() {
+        val a: Any = "hello"
+        a.typeIs(String::class).toUpperCase() isEqualTo "HELLO" // Returns a as String
+    }
+
+    @Test fun `type is can operate on nullable types`() {
+        val a: String? = "hello"
+        a.typeIs(String::class).length // Returns a as String
+
+        val nullValue: String? = null
+        { nullValue typeIs String::class } throws Error::class
+    }
+
     private val OBJECT_A = Date(0)
     private val OBJECT_B = Date(0)
 

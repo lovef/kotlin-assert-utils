@@ -13,13 +13,18 @@ import kotlin.reflect.KClass
  * @author Love
  */
 
-infix fun <T : Any, R : Any> T?.typeIs(type: KClass<R>) = apply {
+/** `a typeIs T::class asserts that `a` is an instance of `T`.
+ *
+ * `a` is returned as `T` after successful assertion. */
+@Suppress("UNCHECKED_CAST")
+infix fun <T : Any, R : Any> T?.typeIs(type: KClass<R>): R {
     MatcherAssert.assertThat("$this type is ${type.java.simpleName}", this, IsInstanceOf(type.java))
+    return this as R
 }
 
 private fun equals(a: Any?, b: Any?) = when {
     a is Array<*> && b is Array<*> -> Arrays.equals(a, b)
-    a is ByteArray && b is ByteArray  -> Arrays.equals(a, b)
+    a is ByteArray && b is ByteArray -> Arrays.equals(a, b)
     a is CharArray && b is CharArray -> Arrays.equals(a, b)
     a is ShortArray && b is ShortArray -> Arrays.equals(a, b)
     a is IntArray && b is IntArray -> Arrays.equals(a, b)
