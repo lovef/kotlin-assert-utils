@@ -21,6 +21,7 @@ class ThrowsAssertUtilKtTest {
     }
 
     class SpecialException(val specialValue: String = "special value") : Exception()
+    class OtherException : Exception()
 
     @Test fun `throws`() {
         val exception = SpecialException();
@@ -31,8 +32,12 @@ class ThrowsAssertUtilKtTest {
         { { } throws Error::class } throws NotThrownError::class
 
         { { 1 } throws Error::class } throws NotThrownError::class
+    }
 
-        { { throw exception } throws Error::class } throws NotThrownError::class
-        { { throw Error() } throws Exception::class } throws NotThrownError::class
+    @Test fun `throws throw throwable if type is wrong`() {
+        val thrown = SpecialException();
+        { { throw thrown } throws OtherException::class }
+                .throws(SpecialException::class)
+                .isEqualTo(thrown)
     }
 }

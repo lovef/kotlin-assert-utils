@@ -8,25 +8,21 @@ import kotlin.reflect.KClass
  * @author Love
  */
 
+/** `{ foo() } throws T::class` asserts that invoking `foo()` throws a throwable of type `T`
+ *
+ * Rethrows throwable of wrong type. Throws [NotThrownError] if nothing was thrown. */
 inline infix fun <reified T : Throwable> (() -> Any?).throws(throwableType: KClass<T>): T {
-    var thrown: T? = null
     try {
         invoke()
-    } catch (t: Throwable) {
-        if (t is T) {
-            thrown = t
+    } catch (thrown: Throwable) {
+        if (thrown is T) {
+            return thrown
+        } else {
+            throw thrown
         }
     }
-    if (thrown == null) {
-        throw NotThrownError("${throwableType.java.simpleName} was never thrown")
-    }
-    try {
-        thrown typeIs throwableType
-        return thrown
-    } catch (error: Error) {
-        throw NotThrownError("Expected ${throwableType.java.simpleName} to be thrown " +
-                "but caught ${thrown.javaClass.simpleName}")
-    }
+    throw NotThrownError("${throwableType.java.simpleName} was never thrown")
 }
 
+/** Indicates that expected throwable was never thrown */
 class NotThrownError(message: String) : AssertionFailedError(message)
