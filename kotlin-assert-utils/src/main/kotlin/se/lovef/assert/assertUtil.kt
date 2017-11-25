@@ -1,6 +1,7 @@
 package se.lovef.assert
 
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Assert
 import org.junit.Assert.assertTrue
 import java.util.*
 
@@ -51,29 +52,9 @@ infix fun <T : Any> T?.referenceIsEqualTo(other: T?) = apply {
 }
 
 infix fun <T : Any> T?.referenceIsNotEqualTo(other: T?): T? {
-    assertTrue("\n" +
+    Assert.assertTrue("\n" +
             "Expected:              $this\n" +
             "Not same reference as: $other", this !== other)
-    return other
-}
-
-infix fun <T : Comparable<T>> T.isLessThan(other: T): T {
-    assertTrue("$this < $other", this < other)
-    return other
-}
-
-infix fun <T : Comparable<T>> T.isLessOrEqualTo(other: T): T {
-    assertTrue("$this <= $other", this <= other)
-    return other
-}
-
-infix fun <T : Comparable<T>> T.isGreaterThan(other: T): T {
-    assertTrue("$this > $other", this > other)
-    return other
-}
-
-infix fun <T : Comparable<T>> T.isGreaterOrEqualTo(other: T): T {
-    assertTrue("$this >= $other", this >= other)
     return other
 }
 
