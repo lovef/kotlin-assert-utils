@@ -1,14 +1,21 @@
 package se.lovef.assert
 
+import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.IsInstanceOf
 import org.junit.Assert
 import org.junit.Assert.assertTrue
 import java.util.*
+import kotlin.reflect.KClass
 
 /*
  * Date: 2017-03-31
  * @author Love
  */
+
+infix fun <T : Any, R : Any> T?.typeIs(type: KClass<R>) = apply {
+    MatcherAssert.assertThat("$this type is ${type.java.simpleName}", this, IsInstanceOf(type.java))
+}
 
 private fun equals(a: Any?, b: Any?) = when {
     a is Array<*> && b is Array<*> -> Arrays.equals(a, b)

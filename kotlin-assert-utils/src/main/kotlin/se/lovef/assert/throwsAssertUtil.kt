@@ -1,8 +1,6 @@
 package se.lovef.assert
 
 import junit.framework.AssertionFailedError
-import org.hamcrest.MatcherAssert
-import org.hamcrest.core.IsInstanceOf
 import kotlin.reflect.KClass
 
 /*
@@ -29,10 +27,6 @@ inline infix fun <reified T : Throwable> (() -> Any?).throws(throwableType: KCla
         throw NotThrownError("Expected ${throwableType.java.simpleName} to be thrown " +
                 "but caught ${thrown.javaClass.simpleName}")
     }
-}
-
-infix fun <T : Any, R : Any> T?.typeIs(type: KClass<R>) = apply {
-    MatcherAssert.assertThat("$this type is ${type.java.simpleName}", this, IsInstanceOf(type.java))
 }
 
 class NotThrownError(message: String) : AssertionFailedError(message)
