@@ -3,7 +3,6 @@ package se.lovef.assert
 import junit.framework.AssertionFailedError
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsInstanceOf
-import org.intellij.lang.annotations.Language
 import org.junit.Assert.assertTrue
 import java.util.*
 import kotlin.reflect.KClass
@@ -65,46 +64,6 @@ infix fun <T : Any> T?.isNotEqualTo(other: T?): T? {
             "Expected not: $other\n" +
             "Got:          $this", !equals(this, other))
     return other
-}
-
-infix fun CharSequence?.doesContain(other: CharSequence) = isNotNull().apply {
-    assertThat("'$this' does contain '$other'", this.contains(other))
-}
-
-infix fun CharSequence?.doesNotContain(other: CharSequence) = apply {
-    assertThat("'$this' does not contain '$other'", this == null || !this.contains(other))
-}
-
-infix fun CharSequence?.doesMatch(@Language("RegExp") regex: CharSequence) = isNotNull().apply {
-    assertThat("'$this' does match '$regex'", this.toString().contains(regex.toString().toRegex()))
-}
-
-infix fun CharSequence?.doesMatch(regex: Regex) = isNotNull().apply {
-    assertThat("'$this' does match '$regex'", this.toString().contains(regex))
-}
-
-infix fun CharSequence?.doesNotMatch(@Language("RegExp") regex: CharSequence) = apply {
-    assertThat("'$this' does not match '$regex'", this == null || !this.contains(regex.toString().toRegex()))
-}
-
-infix fun CharSequence?.doesNotMatch(@Language("RegExp") regex: Regex) = apply {
-    assertThat("'$this' does not match '$regex'", this == null || !this.contains(regex))
-}
-
-infix fun CharSequence?.doesStartWith(start: CharSequence)  = isNotNull().apply {
-    assertThat("'$this' does start with '$start'", this.startsWith(start))
-}
-
-infix fun CharSequence?.doesNotStartWith(start: CharSequence)  = apply {
-    assertThat("'$this' does not start with '$start'", this == null || !this.startsWith(start))
-}
-
-infix fun CharSequence?.doesEndWith(end: CharSequence)  = isNotNull().apply {
-    assertThat("'$this' does end with '$end'", this.endsWith(end))
-}
-
-infix fun CharSequence?.doesNotEndWith(end: CharSequence)  = apply {
-    assertThat("'$this' does not end with '$end'", this == null || !this.endsWith(end))
 }
 
 fun <T : Any> T?.isNull() = apply { this isEqualTo null }
