@@ -138,6 +138,14 @@ class AssertUtilTest {
         { 1 isCloseTo 0.9 tolerance 0.05 } throws Error::class
     }
 
+    @Test fun `close to works on nullable types`() {
+        (1 as Int?) isCloseTo (1 as Int?) tolerance (0 as Int?)
+
+        { (null as Int?) isCloseTo 1 tolerance 0 } throws Error::class
+        { 1 isCloseTo (null as Int?) tolerance 0 } throws Error::class
+        { 1 isCloseTo 1 tolerance (null as Int?) } throws Error::class
+    }
+
     @Test fun `proof`() {
         "We can describe our tests" proof {
             1 isEqualTo 1
