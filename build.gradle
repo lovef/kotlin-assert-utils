@@ -24,7 +24,7 @@ allprojects {
 }
 
 //noinspection GroovyAssignabilityCheck
-task releaseTag {
+task tag {
     doLast {
         def currentReleaseTags = getCurrentReleaseTags()
         if (!currentReleaseTags.isEmpty()) {
@@ -47,11 +47,15 @@ task releaseTag {
         def tag = "$prefix$nextPatch"
         println execForOutput('git', 'tag', tag)
 
-        println "Created tag $tag"
-        println "To delete:  git tag --delete $tag"
-        println "To push:    git push origin $tag"
-        println()
-        println "Version: " + resolveVersionString()
+        println """
+        Created tag $tag
+
+        Commands:
+
+            git tag --delete $tag # To delete
+            git push origin $tag  # To push
+
+        Version: ${resolveVersionString()}""".stripIndent()
     }
 }
 
