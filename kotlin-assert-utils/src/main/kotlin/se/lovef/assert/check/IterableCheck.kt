@@ -17,17 +17,17 @@ class IterableCheck<in E>(vararg elementChecks: (E) -> Unit) : Check<Iterable<E>
         toCheck.isNotNull()
         toCheck!!
         val elementCheckIterator = elementChecks.iterator()
-        var toFewChecks = false
         for (it in toCheck) {
             if (!elementCheckIterator.hasNext()) {
-                toFewChecks = true
-                break
+                throw ElementCountMismatchError("To many elements in iterable,\n" +
+                        "expected: ${elementChecks.count()}\n" +
+                        "actual:   ${toCheck.count()}")
             }
             val check = elementCheckIterator.next()
             check(it)
         }
-        if (toFewChecks || elementCheckIterator.hasNext()) {
-            throw ElementCountMismatchError("Not enough elements in iterable,\n" +
+        if (elementCheckIterator.hasNext()) {
+            throw ElementCountMismatchError("To few elements in iterable,\n" +
                     "expected: ${elementChecks.count()}\n" +
                     "actual:   ${toCheck.count()}")
         }
