@@ -30,5 +30,9 @@ class ExampleTest {
 
         true.isTrue();
         { null.isTrue() } throws Error::class
+
+        listOf(1, "2") passes listCheck(
+                { it isEqualTo 1 },
+                { it isEqualTo "2" })
     }
 }

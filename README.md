@@ -27,6 +27,10 @@ null.isNull()
 
 true.isTrue();
 { null.isTrue() } throws Error::class
+
+listOf(1, "2") passes listCheck(
+        { it isEqualTo 1 },
+        { it isEqualTo "2" })
 ```
 
 ## Setup
@@ -34,7 +38,7 @@ true.isTrue();
 ``` gradle
 dependencies {
     ...
-    testCompile 'se.lovef:kotlin-assert-utils:0.1.1'
+    testCompile 'se.lovef:kotlin-assert-utils:0.2.1'
 }
 
 repositories {
