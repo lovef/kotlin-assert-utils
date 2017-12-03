@@ -2,6 +2,7 @@ package se.lovef.assert
 
 import junit.framework.AssertionFailedError
 import org.junit.Assert
+import se.lovef.assert.check.IterableCheck
 
 /*
  * Date: 2017-09-02
@@ -44,3 +45,9 @@ fun <E> assertPairwise(a: Iterable<E>?, b: Iterable<E>?, assertionBlock: (E, E) 
         Assert.fail("to many elements in $b")
     }
 }
+
+/** Creates an [IterableCheck] */
+fun <E> iterableCheck(vararg elementChecks: (E) -> Unit) = IterableCheck(*elementChecks)
+
+/** Creates an [IterableCheck] */
+fun <E> listCheck(vararg elementChecks: (E) -> Unit) = IterableCheck(*elementChecks)
