@@ -1,6 +1,8 @@
 package se.lovef.assert
 
 import org.junit.Test
+import se.lovef.assert.check.ElementCountMismatchError
+import se.lovef.assert.check.IterableCheck
 
 /**
  * Date: 2017-03-31
@@ -64,5 +66,10 @@ class IterableAssertUtilTest {
                 { assertPairwise(a.iterable(1, 2), b.iterable(1, 3)) { a, b -> a isEqualTo b } } throws Error::class
             }
         }
+    }
+
+    @Test fun `check iterable aliases`() {
+        iterableCheck<Any>({}) typeIs IterableCheck::class
+        listCheck<Any>({}) typeIs IterableCheck::class
     }
 }
