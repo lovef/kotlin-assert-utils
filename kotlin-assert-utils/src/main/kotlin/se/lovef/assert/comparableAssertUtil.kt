@@ -19,7 +19,11 @@ import org.junit.Assert
  *
  * Compare with mathematical expression `a < b < c` */
 infix fun <T : Comparable<T>> T?.isLessThan(other: T?): T {
-    Assert.assertTrue("$this < $other", this.isNotNull() < other.isNotNull())
+    try {
+        Assert.assertTrue(this.isNotNull() < other.isNotNull())
+    } catch (error: AssertionError) {
+        throw AssertionError("$this < $other", error)
+    }
     return other!!
 }
 
@@ -35,7 +39,11 @@ infix fun <T : Comparable<T>> T?.isLessThan(other: T?): T {
  *
  * Compare with mathematical expression `a ≤ b ≤ c` */
 infix fun <T : Comparable<T>> T?.isLessOrEqualTo(other: T?): T {
-    Assert.assertTrue("$this <= $other", this.isNotNull() <= other.isNotNull())
+    try {
+        Assert.assertTrue(this.isNotNull() <= other.isNotNull())
+    } catch (error: AssertionError) {
+        throw AssertionError("$this <= $other", error)
+    }
     return other!!
 }
 
@@ -51,7 +59,11 @@ infix fun <T : Comparable<T>> T?.isLessOrEqualTo(other: T?): T {
  *
  * Compare with mathematical expression `a > b > c` */
 infix fun <T : Comparable<T>> T?.isGreaterThan(other: T?): T {
-    Assert.assertTrue("$this > $other", this.isNotNull() > other.isNotNull())
+    try {
+        Assert.assertTrue("$this > $other", this.isNotNull() > other.isNotNull())
+    } catch (error: AssertionError) {
+        throw AssertionError("$this > $other", error)
+    }
     return other!!
 }
 
@@ -68,6 +80,10 @@ infix fun <T : Comparable<T>> T?.isGreaterThan(other: T?): T {
  *
  * Compare with mathematical expression `a ≥ b ≥ c` */
 infix fun <T : Comparable<T>> T?.isGreaterOrEqualTo(other: T?): T {
-    Assert.assertTrue("$this >= $other", this.isNotNull() >= other.isNotNull())
+    try {
+        Assert.assertTrue("$this >= $other", this.isNotNull() >= other.isNotNull())
+    } catch (error: AssertionError) {
+        throw AssertionError("$this >= $other", error)
+    }
     return other!!
 }

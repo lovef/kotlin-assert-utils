@@ -9,9 +9,11 @@ import java.util.*
  */
 class ComparableAssertUtilKtTest {
 
-    private val OBJECT_0_A: Date? = Date(0)
-    private val OBJECT_0_B: Date? = Date(0)
-    private val OBJECT_1: Date? = Date(0)
+    companion object {
+        private val OBJECT_0_A: Date? = Date(0)
+        private val OBJECT_0_B: Date? = Date(0)
+        private val OBJECT_1: Date? = Date(0)
+    }
 
     @Test fun `is less than`() {
         1 isLessThan 2
@@ -57,20 +59,44 @@ class ComparableAssertUtilKtTest {
         val nullValue: Int? = null
         val a: Int? = 0
 
-        { nullValue isLessThan a } throws Error::class
-        { nullValue isLessThan nullValue } throws Error::class
-        { a isLessThan nullValue } throws Error::class
+        { nullValue isLessThan a }
+            .throws(Error::class)
+            .message doesContain "null < $a"
+        { nullValue isLessThan nullValue }
+            .throws(Error::class)
+            .message doesContain "null < null"
+        { a isLessThan nullValue }
+            .throws(Error::class)
+            .message doesContain "$a < null"
 
-        { nullValue isLessOrEqualTo a } throws Error::class
-        { nullValue isLessOrEqualTo nullValue } throws Error::class
-        { a isLessOrEqualTo nullValue } throws Error::class
+        { nullValue isLessOrEqualTo a }
+            .throws(Error::class)
+            .message doesContain "null <= $a"
+        { nullValue isLessOrEqualTo nullValue }
+            .throws(Error::class)
+            .message doesContain "null <= null"
+        { a isLessOrEqualTo nullValue }
+            .throws(Error::class)
+            .message doesContain "$a <= null"
 
-        { nullValue isGreaterThan a } throws Error::class
-        { nullValue isGreaterThan nullValue } throws Error::class
-        { a isGreaterThan nullValue } throws Error::class
+        { nullValue isGreaterThan a }
+            .throws(Error::class)
+            .message doesContain "null > $a"
+        { nullValue isGreaterThan nullValue }
+            .throws(Error::class)
+            .message doesContain "null > null"
+        { a isGreaterThan nullValue }
+            .throws(Error::class)
+            .message doesContain "$a > null"
 
-        { nullValue isGreaterOrEqualTo a } throws Error::class
-        { nullValue isGreaterOrEqualTo nullValue } throws Error::class
-        { a isGreaterOrEqualTo nullValue } throws Error::class
+        { nullValue isGreaterOrEqualTo a }
+            .throws(Error::class)
+            .message doesContain "null >= $a"
+        { nullValue isGreaterOrEqualTo nullValue }
+            .throws(Error::class)
+            .message doesContain "null >= null"
+        { a isGreaterOrEqualTo nullValue }
+            .throws(Error::class)
+            .message doesContain "$a >= null"
     }
 }
