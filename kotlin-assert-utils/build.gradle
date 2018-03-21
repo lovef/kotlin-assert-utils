@@ -11,6 +11,7 @@ dependencies {
     compile 'junit:junit:4.12'
 }
 
+//noinspection GroovyAssignabilityCheck,GrUnresolvedAccess
 task sourceJar(type: Jar) {
     classifier = 'sources'
     from sourceSets.main.allSource
@@ -22,6 +23,7 @@ sourceSets {
 
 /** Creates a javadoc jar with README to comply with Sonatypes requirements:
  * http://central.sonatype.org/pages/requirements.html */
+//noinspection GroovyAssignabilityCheck,GrUnresolvedAccess
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from sourceSets.javadoc.output
@@ -35,6 +37,7 @@ def info = [
 
 def mavenDir = "$buildDir/maven"
 
+//noinspection GrUnresolvedAccess
 publishing {
     publications {
         maven(MavenPublication) {
@@ -77,6 +80,7 @@ publishing {
     }
 }
 
+//noinspection GrUnresolvedAccess
 bintray {
     user = project.properties.BINTRAY_API_USER ?: System.getenv('BINTRAY_API_USER')
     key = project.properties.BINTRAY_API_KEY ?: System.getenv('BINTRAY_API_KEY')

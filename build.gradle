@@ -84,10 +84,15 @@ private ArrayList<String> getCurrentReleaseTags() {
 }
 
 private String execForOutput(String... arguments) {
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine arguments
-        standardOutput = stdout
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine arguments
+            standardOutput = stdout
+        }
+        return stdout.toString()
+    } catch (Exception e) {
+        println "Exception $e on invoking ${arguments.join(' ')}"
+        return ""
     }
-    return stdout.toString()
 }
