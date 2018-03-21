@@ -7,34 +7,44 @@ A set of assert utilities for JUnit testing with Kotlin
 ## Example
 
 ```kotlin
-this typeIs Any::class
+class ExampleTest {
 
-1 isEqualTo 1
-{ 1 isEqualTo 2 } throws Error::class
+    @Test fun `example test`() {
+        this typeIs Any::class
 
-1 isLessThan 2 isLessThan 3
-1 isCloseTo 1.1 tolerance 0.2
+        1 isEqualTo 1
+        { 1 isEqualTo 2 } throws Error::class
 
-"my awesome string" doesContain "my" doesContain "awesome" doesContain "string"
-"my awesome string" doesNotContain "shit"
+        1 isLessThan 2 isLessThan 3
+        1 isCloseTo 1.1 tolerance 0.2
 
-null.isNull()
-("123" as String?).isNotNull().length isEqualTo 3
+        "my 1337 string" doesContain "my" doesContain 1337 doesContain "string"
+        "my 1337 string" doesNotContain "shit"
 
-{ "1 is 2" proof { 1 isEqualTo 2 } }
-        .throws(Error::class)
-        .message isEqualTo "1 is 2"
+        null.isNull()
+        ("123" as String?).isNotNull().length isEqualTo 3
 
-true.isTrue();
-{ null.isTrue() } throws Error::class
+        val exception = Exception()
+        ; { throw exception } throws exception
+        { { throw exception } throws Exception() } throws exception
+        { {  } throws exception } throws NotThrownError::class
+
+        { "1 is 2" proof { 1 isEqualTo 2 } }
+            .throws(Error::class)
+            .message isEqualTo "1 is 2"
+
+        true.isTrue();
+        { null.isTrue() } throws Error::class
+    }
+}
 ```
 
 ## Setup
 
-``` gradle
+```gradle
 dependencies {
     ...
-    testCompile 'se.lovef:kotlin-assert-utils:0.1.1'
+    testCompile 'se.lovef:kotlin-assert-utils:0.3.0'
 }
 
 repositories {
