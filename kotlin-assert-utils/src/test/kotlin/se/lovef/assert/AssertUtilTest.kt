@@ -3,6 +3,9 @@ package se.lovef.assert
 import org.junit.Test
 import java.util.*
 
+private val OBJECT_A = Date(0)
+private val OBJECT_B = Date(0)
+
 /**
  * Date: 2017-03-31
  * @author Love
@@ -27,9 +30,6 @@ class AssertUtilTest {
         val nullValue: String? = null
         { nullValue typeIs String::class } throws Error::class
     }
-
-    private val OBJECT_A = Date(0)
-    private val OBJECT_B = Date(0)
 
     @Test fun `reference is equal to`() {
         OBJECT_A referenceIsEqualTo OBJECT_A
@@ -56,6 +56,36 @@ class AssertUtilTest {
         null isEqualTo null
         { null isEqualTo 1 } throws Error::class
         { 1 isEqualTo null } throws Error::class
+    }
+
+    enum class Foo {
+        BAR;
+
+        enum class Foo {
+            BAR;
+        }
+    }
+
+    @Test fun `is equal to - types are not included in error message if they are the same`() {
+        { "FOO" isEqualTo "BAR" }
+            .throws(AssertionError::class)
+            .message doesContain "FOO" doesContain "BAR" doesNotContain String::class.simpleName
+    }
+
+    @Test fun `is equal to - differing simple type names are included in error message`() {
+        { Foo.BAR isEqualTo "BAR" }
+            .throws(AssertionError::class)
+            .message doesContain "BAR" doesContain "<String>" doesContain "<Foo>"
+    }
+
+    @Test fun `is equal to - differing qualified type names are included in error message`() {
+        { Foo.BAR isEqualTo Foo.Foo.BAR }
+            .throws(AssertionError::class)
+            .run {
+                message doesContain Foo.BAR
+                message doesContain "<${Foo.BAR::class.qualifiedName}>"
+                message doesContain "<${Foo.Foo.BAR::class.qualifiedName}>"
+            }
     }
 
     @Test fun `is not equal to`() {
