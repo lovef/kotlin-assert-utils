@@ -36,11 +36,23 @@ private fun equals(a: Any?, b: Any?) = when {
 }
 
 infix fun <T : Any?> T.isEqualTo(other: T): T {
-    assertTrue("\n" +
-            "Expected: $other\n" +
-            "Got:      $this", equals(this, other))
-    return other
+    if (equals(this, other)) {
+        return other
+    }
+    throw AssertionError(
+        """
+        Objects differ
+        Expected: ${other.objectString(differFrom = this)}
+        Got:      ${this.objectString(differFrom = other)}
+        """.trimIndent()
+    )
 }
+
+private fun Any?.objectString(differFrom: Any?): String? = when {
+    this == null || differFrom == null || this::class == differFrom::class -> null
+    this::class.simpleName == differFrom::class.simpleName -> this::class.qualifiedName
+    else -> this::class.simpleName
+}?.let { "$this <$it>" } ?: "$this"
 
 infix fun <T : Any> T?.isNotEqualTo(other: T?): T? {
     assertThat("\n" +
