@@ -9,8 +9,8 @@ import org.junit.Test
 class CheckUtilTest {
 
     @Test fun `basic check`() {
-        1 passes check { it isEqualTo 1 };
-        { 1 passes check { it isEqualTo 2 } } throws Error::class
+        1 passes check { it shouldEqual 1 };
+        { 1 passes check { it shouldEqual 2 } } throws Error::class
     }
 
     @Test fun `'passes' returns checked object`() {
@@ -19,7 +19,7 @@ class CheckUtilTest {
     }
 
     @Test fun `check on nullable`() {
-        null passes check { it isEqualTo null };
-        { null passes check { it isEqualTo 1 } } throws Error::class
+        null passes check { it shouldEqual null };
+        { null passes check { it shouldEqual 1 } } throws Error::class
     }
 }
