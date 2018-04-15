@@ -8,48 +8,48 @@ import org.junit.Test
  */
 class TextAssertUtilTest {
 
-    @Test fun `does contain`() {
-        "my awesome string" as CharSequence doesContain "awesome" as CharSequence shouldBe "my awesome string"
-        { "my awesome string" doesContain "shit" } throws Error::class
-        { "my awesome string" doesContain "we.+me" } throws Error::class
+    @Test fun `should contain`() {
+        "my awesome string" as CharSequence shouldContain "awesome" as CharSequence shouldBe "my awesome string"
+        { "my awesome string" shouldContain "shit" } throws Error::class
+        { "my awesome string" shouldContain "we.+me" } throws Error::class
 
-        "my 1337 null string" doesContain 1337 doesContain null
-        { "my 1337 null string" doesContain 666 } throws Error::class
-        { "my 1337 string" doesContain null } throws Error::class
+        "my 1337 null string" shouldContain 1337 shouldContain null
+        { "my 1337 null string" shouldContain 666 } throws Error::class
+        { "my 1337 string" shouldContain null } throws Error::class
 
-        "my 1337 string" doesContain "my" doesContain 1337 doesContain "string"
+        "my 1337 string" shouldContain "my" shouldContain 1337 shouldContain "string"
 
-        { null doesContain "shit" } throws Error::class
+        { null shouldContain "shit" } throws Error::class
     }
 
-    @Test fun `does not contain`() {
-        "my awesome string" as CharSequence doesNotContain "shit" as CharSequence shouldBe "my awesome string"
-        "other string" doesNotContain 1337 doesNotContain null
-        { "my awesome string" doesNotContain "awesome" } throws Error::class
-        { "my 1337 string" doesNotContain 1337 } throws Error::class
+    @Test fun `should not contain`() {
+        "my awesome string" as CharSequence shouldNotContain "shit" as CharSequence shouldBe "my awesome string"
+        "other string" shouldNotContain 1337 shouldNotContain null
+        { "my awesome string" shouldNotContain "awesome" } throws Error::class
+        { "my 1337 string" shouldNotContain 1337 } throws Error::class
 
-        null doesNotContain "awesome"
+        null shouldNotContain "awesome"
     }
 
-    @Test fun `does match`() {
-        "my awesome string" as CharSequence doesMatch "we.+me" as CharSequence shouldBe "my awesome string"
-        "my awesome string" as CharSequence doesMatch "we.+me".toRegex() shouldBe "my awesome string"
-        { "my awesome string" doesMatch "shit" } throws Error::class
+    @Test fun `should match`() {
+        "my awesome string" as CharSequence shouldMatch "we.+me" as CharSequence shouldBe "my awesome string"
+        "my awesome string" as CharSequence shouldMatch "we.+me".toRegex() shouldBe "my awesome string"
+        { "my awesome string" shouldMatch "shit" } throws Error::class
 
-        "my awesome string" doesMatch "^my" doesMatch "we.+me" doesMatch "string$"
-        "my awesome string" doesMatch "^my".toRegex() doesMatch "we.+me".toRegex() doesMatch "string$".toRegex();
+        "my awesome string" shouldMatch "^my" shouldMatch "we.+me" shouldMatch "string$"
+        "my awesome string" shouldMatch "^my".toRegex() shouldMatch "we.+me".toRegex() shouldMatch "string$".toRegex();
 
-        { null doesMatch "shit" } throws Error::class
+        { null shouldMatch "shit" } throws Error::class
     }
 
-    @Test fun `does not match`() {
-        "my awesome string" as CharSequence doesNotMatch "shit" as CharSequence shouldBe "my awesome string"
-        "my awesome string" as CharSequence doesNotMatch "shit".toRegex() shouldBe "my awesome string"
-        { "my awesome string" doesNotMatch "we.+me" } throws Error::class
-        { "my awesome string" doesNotMatch "we.+me".toRegex() } throws Error::class
+    @Test fun `should not match`() {
+        "my awesome string" as CharSequence shouldNotMatch "shit" as CharSequence shouldBe "my awesome string"
+        "my awesome string" as CharSequence shouldNotMatch "shit".toRegex() shouldBe "my awesome string"
+        { "my awesome string" shouldNotMatch "we.+me" } throws Error::class
+        { "my awesome string" shouldNotMatch "we.+me".toRegex() } throws Error::class
 
-        null doesNotMatch "shit"
-        null doesNotMatch "shit".toRegex()
+        null shouldNotMatch "shit"
+        null shouldNotMatch "shit".toRegex()
     }
 
     @Test fun `does start with`() {
@@ -65,42 +65,42 @@ class TextAssertUtilTest {
         { null doesStartWith "shit" } throws Error::class
     }
 
-    @Test fun `does not start with`() {
-        "my awesome string" as CharSequence doesNotStartWith "awesome" as CharSequence shouldBe "my awesome string"
-        { "my awesome string" doesNotStartWith "my" } throws Error::class
+    @Test fun `should not start with`() {
+        "my awesome string" as CharSequence shouldNotStartWith "awesome" as CharSequence shouldBe "my awesome string"
+        { "my awesome string" shouldNotStartWith "my" } throws Error::class
 
-        "string 1337" doesNotStartWith 1337
-        { "1337 string" doesNotStartWith 1337 } throws Error::class
+        "string 1337" shouldNotStartWith 1337
+        { "1337 string" shouldNotStartWith 1337 } throws Error::class
 
-        "string null" doesNotStartWith null
-        { "null string" doesNotStartWith null } throws Error::class
+        "string null" shouldNotStartWith null
+        { "null string" shouldNotStartWith null } throws Error::class
 
-        null doesNotStartWith "shit"
+        null shouldNotStartWith "shit"
     }
 
-    @Test fun `does end with`() {
-        "my awesome string" as CharSequence doesEndWith "string" as CharSequence shouldBe "my awesome string"
-        { "my awesome string" doesEndWith "awesome" } throws Error::class
+    @Test fun `should end with`() {
+        "my awesome string" as CharSequence shouldEndWith "string" as CharSequence shouldBe "my awesome string"
+        { "my awesome string" shouldEndWith "awesome" } throws Error::class
 
-        "string 1337" doesEndWith 1337
-        { "1337 string" doesEndWith 1337 } throws Error::class
+        "string 1337" shouldEndWith 1337
+        { "1337 string" shouldEndWith 1337 } throws Error::class
 
-        "string null" doesEndWith null
-        { "null string" doesEndWith null } throws Error::class
+        "string null" shouldEndWith null
+        { "null string" shouldEndWith null } throws Error::class
 
-        { null doesEndWith "shit" } throws Error::class
+        { null shouldEndWith "shit" } throws Error::class
     }
 
-    @Test fun `does not end with`() {
-        "my awesome string" as CharSequence doesNotEndWith "awesome" as CharSequence shouldBe "my awesome string"
-        { "my awesome string" doesNotEndWith "string" } throws Error::class
+    @Test fun `should not end with`() {
+        "my awesome string" as CharSequence shouldNotEndWith "awesome" as CharSequence shouldBe "my awesome string"
+        { "my awesome string" shouldNotEndWith "string" } throws Error::class
 
-        "1337 string" doesNotEndWith 1337
-        { "string 1337" doesNotEndWith 1337 } throws Error::class
+        "1337 string" shouldNotEndWith 1337
+        { "string 1337" shouldNotEndWith 1337 } throws Error::class
 
-        "null string" doesNotEndWith null
-        { "string null" doesNotEndWith null } throws Error::class
+        "null string" shouldNotEndWith null
+        { "string null" shouldNotEndWith null } throws Error::class
 
-        null doesNotEndWith "shit"
+        null shouldNotEndWith "shit"
     }
 }

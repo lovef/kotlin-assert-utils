@@ -61,42 +61,42 @@ class ComparableAssertUtilKtTest {
 
         { nullValue shouldBeLessThan a }
             .throws(Error::class)
-            .message doesContain "null < $a"
+            .message shouldContain "null < $a"
         { nullValue shouldBeLessThan nullValue }
             .throws(Error::class)
-            .message doesContain "null < null"
+            .message shouldContain "null < null"
         { a shouldBeLessThan nullValue }
             .throws(Error::class)
-            .message doesContain "$a < null"
+            .message shouldContain "$a < null"
 
         { nullValue shouldBeLessOrEqualTo a }
             .throws(Error::class)
-            .message doesContain "null <= $a"
+            .message shouldContain "null <= $a"
         { nullValue shouldBeLessOrEqualTo nullValue }
             .throws(Error::class)
-            .message doesContain "null <= null"
+            .message shouldContain "null <= null"
         { a shouldBeLessOrEqualTo nullValue }
             .throws(Error::class)
-            .message doesContain "$a <= null"
+            .message shouldContain "$a <= null"
 
         { nullValue shouldBeGreaterThan a }
             .throws(Error::class)
-            .message doesContain "null > $a"
+            .message shouldContain "null > $a"
         { nullValue shouldBeGreaterThan nullValue }
             .throws(Error::class)
-            .message doesContain "null > null"
+            .message shouldContain "null > null"
         { a shouldBeGreaterThan nullValue }
             .throws(Error::class)
-            .message doesContain "$a > null"
+            .message shouldContain "$a > null"
 
         { nullValue shouldBeGreaterOrEqualTo a }
             .throws(Error::class)
-            .message doesContain "null >= $a"
+            .message shouldContain "null >= $a"
         { nullValue shouldBeGreaterOrEqualTo nullValue }
             .throws(Error::class)
-            .message doesContain "null >= null"
+            .message shouldContain "null >= null"
         { a shouldBeGreaterOrEqualTo nullValue }
             .throws(Error::class)
-            .message doesContain "$a >= null"
+            .message shouldContain "$a >= null"
     }
 }
