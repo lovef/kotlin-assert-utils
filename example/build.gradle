@@ -1,9 +1,7 @@
 apply plugin: 'kotlin'
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-    testCompile 'se.lovef:kotlin-assert-utils:0.3.0'
+    testCompile 'se.lovef:kotlin-assert-utils:0.4.0'
 }
 
 repositories {
