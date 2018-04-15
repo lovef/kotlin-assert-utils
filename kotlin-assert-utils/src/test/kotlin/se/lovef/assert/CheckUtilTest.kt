@@ -15,7 +15,7 @@ class CheckUtilTest {
 
     @Test fun `'passes' returns checked object`() {
         val a = Any()
-        a passes check {  } referenceIsEqualTo a
+        a passes check {  } shouldBe a
     }
 
     @Test fun `check on nullable`() {

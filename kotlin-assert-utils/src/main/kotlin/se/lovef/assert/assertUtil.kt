@@ -57,13 +57,13 @@ fun Boolean?.isTrue() = apply { this isEqualTo true }
 
 fun Boolean?.isFalse() = apply { this isEqualTo false }
 
-infix fun <T : Any> T?.referenceIsEqualTo(other: T?) = apply {
+infix fun <T : Any> T?.shouldBe(other: T?) = apply {
     assertTrue("\n" +
             "Expected:          $this\n" +
             "Same reference as: $other", this === other)
 }
 
-infix fun <T : Any> T?.referenceIsNotEqualTo(other: T?): T? {
+infix fun <T : Any> T?.shouldNotBe(other: T?): T? {
     Assert.assertTrue("\n" +
             "Expected:              $this\n" +
             "Not same reference as: $other", this !== other)
