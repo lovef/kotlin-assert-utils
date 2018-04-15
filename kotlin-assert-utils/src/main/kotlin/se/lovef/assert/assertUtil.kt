@@ -70,11 +70,11 @@ infix fun <T : Any> T?.shouldNotBe(other: T?): T? {
     return other
 }
 
-/** `a isCloseTo b tolerance c` asserts that
+/** `a shouldBeCloseTo b tolerance c` asserts that
  *
  * - `a`, `b` and `c` is not null
  * - The difference between `a` and `b` is less then or equal to `c` */
-infix fun <T : Number, R : Number> T?.isCloseTo(other: R?) = Difference(this.shouldNotBeNull(), other.shouldNotBeNull())
+infix fun <T : Number, R : Number> T?.shouldBeCloseTo(other: R?) = Difference(this.shouldNotBeNull(), other.shouldNotBeNull())
 
 class Difference<out T : Number, out R : Number>(private val a: T, private val b: R) {
     infix fun tolerance(t: Number?) {

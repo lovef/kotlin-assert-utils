@@ -124,26 +124,26 @@ class AssertUtilTest {
         { null.shouldBeFalse() } throws Error::class
     }
 
-    @Test fun `is close to`() {
-        1 isCloseTo 1 tolerance 0
-        { 1 isCloseTo 2 tolerance 0 } throws Error::class
-        1 isCloseTo 2 tolerance 1
-        { 1 isCloseTo 2 tolerance 0 } throws Error::class
-        1 isCloseTo 0 tolerance 1
-        { 1 isCloseTo 0 tolerance 0 } throws Error::class
+    @Test fun `should be close to`() {
+        1 shouldBeCloseTo 1 tolerance 0
+        { 1 shouldBeCloseTo 2 tolerance 0 } throws Error::class
+        1 shouldBeCloseTo 2 tolerance 1
+        { 1 shouldBeCloseTo 2 tolerance 0 } throws Error::class
+        1 shouldBeCloseTo 0 tolerance 1
+        { 1 shouldBeCloseTo 0 tolerance 0 } throws Error::class
 
-        1 isCloseTo 1.1 tolerance 0.2
-        { 1 isCloseTo 1.1 tolerance 0.05 } throws Error::class
-        1 isCloseTo 0.9 tolerance 0.2
-        { 1 isCloseTo 0.9 tolerance 0.05 } throws Error::class
+        1 shouldBeCloseTo 1.1 tolerance 0.2
+        { 1 shouldBeCloseTo 1.1 tolerance 0.05 } throws Error::class
+        1 shouldBeCloseTo 0.9 tolerance 0.2
+        { 1 shouldBeCloseTo 0.9 tolerance 0.05 } throws Error::class
     }
 
     @Test fun `close to works on nullable types`() {
-        (1 as Int?) isCloseTo (1 as Int?) tolerance (0 as Int?)
+        (1 as Int?) shouldBeCloseTo (1 as Int?) tolerance (0 as Int?)
 
-        { (null as Int?) isCloseTo 1 tolerance 0 } throws Error::class
-        { 1 isCloseTo (null as Int?) tolerance 0 } throws Error::class
-        { 1 isCloseTo 1 tolerance (null as Int?) } throws Error::class
+        { (null as Int?) shouldBeCloseTo 1 tolerance 0 } throws Error::class
+        { 1 shouldBeCloseTo (null as Int?) tolerance 0 } throws Error::class
+        { 1 shouldBeCloseTo 1 tolerance (null as Int?) } throws Error::class
     }
 
     @Test fun `proof`() {
