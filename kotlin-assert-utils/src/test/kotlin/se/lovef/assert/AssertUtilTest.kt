@@ -110,18 +110,18 @@ class AssertUtilTest {
         "123".shouldNotBeNull().length shouldEqual 3
     }
 
-    @Test fun `is true`() {
-        true.isTrue()
-        true.isTrue() shouldBe true
-        { false.isTrue() } throws Error::class
-        { null.isTrue() } throws Error::class
+    @Test fun `should be true`() {
+        true.shouldBeTrue()
+        true.shouldBeTrue() shouldBe true
+        { false.shouldBeTrue() } throws Error::class
+        { null.shouldBeTrue() } throws Error::class
     }
 
-    @Test fun `is false`() {
-        false.isFalse()
-        false.isFalse() shouldBe false
-        { true.isFalse() } throws Error::class
-        { null.isFalse() } throws Error::class
+    @Test fun `should be false`() {
+        false.shouldBeFalse()
+        false.shouldBeFalse() shouldBe false
+        { true.shouldBeFalse() } throws Error::class
+        { null.shouldBeFalse() } throws Error::class
     }
 
     @Test fun `is close to`() {

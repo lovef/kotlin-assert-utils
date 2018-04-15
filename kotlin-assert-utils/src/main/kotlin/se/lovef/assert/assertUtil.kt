@@ -53,9 +53,9 @@ fun <T : Any> T?.shouldBeNull() = apply { this shouldEqual null }
 
 fun <T : Any> T?.shouldNotBeNull() = apply { this shouldNotEqual null }!!
 
-fun Boolean?.isTrue() = apply { this shouldEqual true }
+fun Boolean?.shouldBeTrue() = apply { this shouldEqual true }
 
-fun Boolean?.isFalse() = apply { this shouldEqual false }
+fun Boolean?.shouldBeFalse() = apply { this shouldEqual false }
 
 infix fun <T : Any> T?.shouldBe(other: T?) = apply {
     assertTrue("\n" +
