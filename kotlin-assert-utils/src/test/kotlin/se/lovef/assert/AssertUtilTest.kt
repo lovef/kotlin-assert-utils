@@ -10,7 +10,7 @@ import java.util.*
 class AssertUtilTest {
 
     @Test fun `type is`() {
-        this typeIs AssertUtilTest::class referenceIsEqualTo this
+        this typeIs AssertUtilTest::class shouldBe this
         this typeIs Any::class
         { this typeIs Int::class } throws Error::class
     }
@@ -31,24 +31,24 @@ class AssertUtilTest {
     private val OBJECT_A = Date(0)
     private val OBJECT_B = Date(0)
 
-    @Test fun `reference is equal to`() {
-        OBJECT_A referenceIsEqualTo OBJECT_A
-        { OBJECT_A referenceIsEqualTo OBJECT_B } throws Error::class
-        OBJECT_A referenceIsEqualTo OBJECT_A referenceIsEqualTo OBJECT_A
-        { OBJECT_A referenceIsEqualTo OBJECT_B referenceIsEqualTo OBJECT_B } throws Error::class
-        { OBJECT_A referenceIsEqualTo OBJECT_A referenceIsEqualTo OBJECT_B } throws Error::class
+    @Test fun `should be`() {
+        OBJECT_A shouldBe OBJECT_A
+        { OBJECT_A shouldBe OBJECT_B } throws Error::class
+        OBJECT_A shouldBe OBJECT_A shouldBe OBJECT_A
+        { OBJECT_A shouldBe OBJECT_B shouldBe OBJECT_B } throws Error::class
+        { OBJECT_A shouldBe OBJECT_A shouldBe OBJECT_B } throws Error::class
     }
 
-    @Test fun `reference is not equal to`() {
-        OBJECT_A referenceIsNotEqualTo OBJECT_B;
-        { OBJECT_A referenceIsNotEqualTo OBJECT_A } throws Error::class
-        (OBJECT_A referenceIsNotEqualTo OBJECT_B) referenceIsEqualTo OBJECT_B
+    @Test fun `should not be`() {
+        OBJECT_A shouldNotBe OBJECT_B;
+        { OBJECT_A shouldNotBe OBJECT_A } throws Error::class
+        (OBJECT_A shouldNotBe OBJECT_B) shouldBe OBJECT_B
     }
 
     @Test fun `is equal to`() {
         1 isEqualTo 1
         { 1 isEqualTo 2 } throws Error::class
-        (OBJECT_A isEqualTo OBJECT_B) referenceIsEqualTo OBJECT_B
+        (OBJECT_A isEqualTo OBJECT_B) shouldBe OBJECT_B
         1 isEqualTo 1 isEqualTo 1
         { 1 isEqualTo 2 isEqualTo 2 } throws Error::class
         { 1 isEqualTo 1 isEqualTo 2 } throws Error::class
@@ -61,7 +61,7 @@ class AssertUtilTest {
     @Test fun `is not equal to`() {
         1 isNotEqualTo 2
         { 1 isNotEqualTo 1 } throws Error::class
-        (Any() isNotEqualTo OBJECT_B) referenceIsEqualTo OBJECT_B
+        (Any() isNotEqualTo OBJECT_B) shouldBe OBJECT_B
         1 isNotEqualTo 2 isNotEqualTo 1
         { 1 isNotEqualTo 1 isNotEqualTo 2 } throws Error::class
         { 1 isNotEqualTo 2 isNotEqualTo 2 } throws Error::class
@@ -99,27 +99,27 @@ class AssertUtilTest {
 
     @Test fun `is null`() {
         null.isNull()
-        null.isNull() referenceIsEqualTo null
+        null.isNull() shouldBe null
         { OBJECT_A.isNull() } throws Error::class
     }
 
     @Test fun `is not null`() {
         OBJECT_A.isNotNull()
-        OBJECT_A.isNotNull() referenceIsEqualTo OBJECT_A
+        OBJECT_A.isNotNull() shouldBe OBJECT_A
         { null.isNotNull() } throws Error::class
         "123".isNotNull().length isEqualTo 3
     }
 
     @Test fun `is true`() {
         true.isTrue()
-        true.isTrue() referenceIsEqualTo true
+        true.isTrue() shouldBe true
         { false.isTrue() } throws Error::class
         { null.isTrue() } throws Error::class
     }
 
     @Test fun `is false`() {
         false.isFalse()
-        false.isFalse() referenceIsEqualTo false
+        false.isFalse() shouldBe false
         { true.isFalse() } throws Error::class
         { null.isFalse() } throws Error::class
     }
