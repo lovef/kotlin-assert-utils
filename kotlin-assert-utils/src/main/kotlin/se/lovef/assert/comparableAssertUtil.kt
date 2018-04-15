@@ -7,7 +7,7 @@ import org.junit.Assert
  * @author Love
  */
 
-/** `a isLessThan b` asserts that
+/** `a shouldBeLessThan b` asserts that
  *
  * - `a` is not null
  * - `b` is not null
@@ -15,10 +15,10 @@ import org.junit.Assert
  *
  * `b` is returned after successful assertion to allow chaining
  *
- * `a isLessThan b isLessThan c`
+ * `a shouldBeLessThan b shouldBeLessThan c`
  *
  * Compare with mathematical expression `a < b < c` */
-infix fun <T : Comparable<T>> T?.isLessThan(other: T?): T {
+infix fun <T : Comparable<T>> T?.shouldBeLessThan(other: T?): T {
     try {
         Assert.assertTrue(this.shouldNotBeNull() < other.shouldNotBeNull())
     } catch (error: AssertionError) {
@@ -27,7 +27,7 @@ infix fun <T : Comparable<T>> T?.isLessThan(other: T?): T {
     return other!!
 }
 
-/** `a isLessOrEqualTo b` asserts that
+/** `a shouldBeLessOrEqualTo b` asserts that
  *
  * - `a` is not null
  * - `b` is not null
@@ -35,10 +35,10 @@ infix fun <T : Comparable<T>> T?.isLessThan(other: T?): T {
  *
  * `b` is returned after successful assertion to allow chaining
  *
- * `a isLessOrEqualTo b isLessOrEqualTo c`
+ * `a shouldBeLessOrEqualTo b shouldBeLessOrEqualTo c`
  *
  * Compare with mathematical expression `a ≤ b ≤ c` */
-infix fun <T : Comparable<T>> T?.isLessOrEqualTo(other: T?): T {
+infix fun <T : Comparable<T>> T?.shouldBeLessOrEqualTo(other: T?): T {
     try {
         Assert.assertTrue(this.shouldNotBeNull() <= other.shouldNotBeNull())
     } catch (error: AssertionError) {
@@ -47,7 +47,7 @@ infix fun <T : Comparable<T>> T?.isLessOrEqualTo(other: T?): T {
     return other!!
 }
 
-/** `a isGreaterThan b` asserts that
+/** `a shouldBeGreaterThan b` asserts that
  *
  * - `a` is not null
  * - `b` is not null
@@ -55,10 +55,10 @@ infix fun <T : Comparable<T>> T?.isLessOrEqualTo(other: T?): T {
  *
  * `b` is returned after successful assertion to allow chaining
  *
- * `a isGreaterThan b isGreaterThan c`
+ * `a shouldBeGreaterThan b shouldBeGreaterThan c`
  *
  * Compare with mathematical expression `a > b > c` */
-infix fun <T : Comparable<T>> T?.isGreaterThan(other: T?): T {
+infix fun <T : Comparable<T>> T?.shouldBeGreaterThan(other: T?): T {
     try {
         Assert.assertTrue("$this > $other", this.shouldNotBeNull() > other.shouldNotBeNull())
     } catch (error: AssertionError) {
@@ -68,7 +68,7 @@ infix fun <T : Comparable<T>> T?.isGreaterThan(other: T?): T {
 }
 
 
-/** `a isGreaterOrEqualTo b` asserts that
+/** `a shouldBeGreaterOrEqualTo b` asserts that
  *
  * - `a` is not null
  * - `b` is not null
@@ -76,10 +76,10 @@ infix fun <T : Comparable<T>> T?.isGreaterThan(other: T?): T {
  *
  * `b` is returned after successful assertion to allow chaining
  *
- * `a isGreaterOrEqualTo b isGreaterOrEqualTo c`
+ * `a shouldBeGreaterOrEqualTo b shouldBeGreaterOrEqualTo c`
  *
  * Compare with mathematical expression `a ≥ b ≥ c` */
-infix fun <T : Comparable<T>> T?.isGreaterOrEqualTo(other: T?): T {
+infix fun <T : Comparable<T>> T?.shouldBeGreaterOrEqualTo(other: T?): T {
     try {
         Assert.assertTrue("$this >= $other", this.shouldNotBeNull() >= other.shouldNotBeNull())
     } catch (error: AssertionError) {

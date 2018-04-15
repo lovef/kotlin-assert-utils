@@ -15,87 +15,87 @@ class ComparableAssertUtilKtTest {
         private val OBJECT_1: Date? = Date(0)
     }
 
-    @Test fun `is less than`() {
-        1 isLessThan 2
-        { 1 isLessThan 1 } throws Error::class
-        (OBJECT_0_A isLessOrEqualTo OBJECT_1) shouldBe OBJECT_1
-        (1 isLessThan 2) shouldEqual 2
-        1 isLessThan 2 isLessThan 3
-        { 1 isLessThan 1 isLessThan 3 } throws Error::class
-        { 1 isLessThan 2 isLessThan 2 } throws Error::class
+    @Test fun `should be less than`() {
+        1 shouldBeLessThan 2
+        { 1 shouldBeLessThan 1 } throws Error::class
+        (OBJECT_0_A shouldBeLessOrEqualTo OBJECT_1) shouldBe OBJECT_1
+        (1 shouldBeLessThan 2) shouldEqual 2
+        1 shouldBeLessThan 2 shouldBeLessThan 3
+        { 1 shouldBeLessThan 1 shouldBeLessThan 3 } throws Error::class
+        { 1 shouldBeLessThan 2 shouldBeLessThan 2 } throws Error::class
     }
 
-    @Test fun `is less or equal to`() {
-        1 isLessOrEqualTo 1
-        1 isLessOrEqualTo 2
-        { 1 isLessOrEqualTo 0 } throws Error::class
-        (OBJECT_0_A isLessOrEqualTo OBJECT_0_B) shouldBe OBJECT_0_B
-        1 isLessOrEqualTo 1 isLessOrEqualTo 1
-        { 1 isLessOrEqualTo 0 isLessOrEqualTo 0 } throws Error::class
-        { 1 isLessOrEqualTo 1 isLessOrEqualTo 0 } throws Error::class
+    @Test fun `should be less or equal to`() {
+        1 shouldBeLessOrEqualTo 1
+        1 shouldBeLessOrEqualTo 2
+        { 1 shouldBeLessOrEqualTo 0 } throws Error::class
+        (OBJECT_0_A shouldBeLessOrEqualTo OBJECT_0_B) shouldBe OBJECT_0_B
+        1 shouldBeLessOrEqualTo 1 shouldBeLessOrEqualTo 1
+        { 1 shouldBeLessOrEqualTo 0 shouldBeLessOrEqualTo 0 } throws Error::class
+        { 1 shouldBeLessOrEqualTo 1 shouldBeLessOrEqualTo 0 } throws Error::class
     }
 
-    @Test fun `is greater than`() {
-        2 isGreaterThan 1
-        { 1 isGreaterThan 1 } throws Error::class
-        (OBJECT_1 isLessOrEqualTo OBJECT_0_A) shouldBe OBJECT_0_A
-        (2 isGreaterThan 1) shouldEqual 1
-        3 isGreaterThan 2 isGreaterThan 1
-        { 3 isGreaterThan 3 isGreaterThan 1 } throws Error::class
-        { 3 isGreaterThan 2 isGreaterThan 2 } throws Error::class
+    @Test fun `should be greater than`() {
+        2 shouldBeGreaterThan 1
+        { 1 shouldBeGreaterThan 1 } throws Error::class
+        (OBJECT_1 shouldBeLessOrEqualTo OBJECT_0_A) shouldBe OBJECT_0_A
+        (2 shouldBeGreaterThan 1) shouldEqual 1
+        3 shouldBeGreaterThan 2 shouldBeGreaterThan 1
+        { 3 shouldBeGreaterThan 3 shouldBeGreaterThan 1 } throws Error::class
+        { 3 shouldBeGreaterThan 2 shouldBeGreaterThan 2 } throws Error::class
     }
 
-    @Test fun `is greater or equal to`() {
-        1 isGreaterOrEqualTo 1
-        2 isGreaterOrEqualTo 1
-        { 1 isGreaterOrEqualTo 2 } throws Error::class
-        (OBJECT_0_A isGreaterOrEqualTo OBJECT_0_B) shouldBe OBJECT_0_B
-        1 isGreaterOrEqualTo 1 isGreaterOrEqualTo 1
-        { 1 isGreaterOrEqualTo 2 isGreaterOrEqualTo 2 } throws Error::class
-        { 1 isGreaterOrEqualTo 1 isGreaterOrEqualTo 2 } throws Error::class
+    @Test fun `should be greater or equal to`() {
+        1 shouldBeGreaterOrEqualTo 1
+        2 shouldBeGreaterOrEqualTo 1
+        { 1 shouldBeGreaterOrEqualTo 2 } throws Error::class
+        (OBJECT_0_A shouldBeGreaterOrEqualTo OBJECT_0_B) shouldBe OBJECT_0_B
+        1 shouldBeGreaterOrEqualTo 1 shouldBeGreaterOrEqualTo 1
+        { 1 shouldBeGreaterOrEqualTo 2 shouldBeGreaterOrEqualTo 2 } throws Error::class
+        { 1 shouldBeGreaterOrEqualTo 1 shouldBeGreaterOrEqualTo 2 } throws Error::class
     }
 
     @Test fun `comparing null yields assertion error`() {
         val nullValue: Int? = null
         val a: Int? = 0
 
-        { nullValue isLessThan a }
+        { nullValue shouldBeLessThan a }
             .throws(Error::class)
             .message doesContain "null < $a"
-        { nullValue isLessThan nullValue }
+        { nullValue shouldBeLessThan nullValue }
             .throws(Error::class)
             .message doesContain "null < null"
-        { a isLessThan nullValue }
+        { a shouldBeLessThan nullValue }
             .throws(Error::class)
             .message doesContain "$a < null"
 
-        { nullValue isLessOrEqualTo a }
+        { nullValue shouldBeLessOrEqualTo a }
             .throws(Error::class)
             .message doesContain "null <= $a"
-        { nullValue isLessOrEqualTo nullValue }
+        { nullValue shouldBeLessOrEqualTo nullValue }
             .throws(Error::class)
             .message doesContain "null <= null"
-        { a isLessOrEqualTo nullValue }
+        { a shouldBeLessOrEqualTo nullValue }
             .throws(Error::class)
             .message doesContain "$a <= null"
 
-        { nullValue isGreaterThan a }
+        { nullValue shouldBeGreaterThan a }
             .throws(Error::class)
             .message doesContain "null > $a"
-        { nullValue isGreaterThan nullValue }
+        { nullValue shouldBeGreaterThan nullValue }
             .throws(Error::class)
             .message doesContain "null > null"
-        { a isGreaterThan nullValue }
+        { a shouldBeGreaterThan nullValue }
             .throws(Error::class)
             .message doesContain "$a > null"
 
-        { nullValue isGreaterOrEqualTo a }
+        { nullValue shouldBeGreaterOrEqualTo a }
             .throws(Error::class)
             .message doesContain "null >= $a"
-        { nullValue isGreaterOrEqualTo nullValue }
+        { nullValue shouldBeGreaterOrEqualTo nullValue }
             .throws(Error::class)
             .message doesContain "null >= null"
-        { a isGreaterOrEqualTo nullValue }
+        { a shouldBeGreaterOrEqualTo nullValue }
             .throws(Error::class)
             .message doesContain "$a >= null"
     }
