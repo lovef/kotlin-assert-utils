@@ -17,7 +17,7 @@ class AssertUtilTest {
 
     @Test fun `type is returns correct type`() {
         val a: Any = "hello"
-        a.typeIs(String::class).toUpperCase() isEqualTo "HELLO" // Returns a as String
+        a.typeIs(String::class).toUpperCase() shouldEqual "HELLO" // Returns a as String
     }
 
     @Test fun `type is can operate on nullable types`() {
@@ -45,56 +45,56 @@ class AssertUtilTest {
         (OBJECT_A shouldNotBe OBJECT_B) shouldBe OBJECT_B
     }
 
-    @Test fun `is equal to`() {
-        1 isEqualTo 1
-        { 1 isEqualTo 2 } throws Error::class
-        (OBJECT_A isEqualTo OBJECT_B) shouldBe OBJECT_B
-        1 isEqualTo 1 isEqualTo 1
-        { 1 isEqualTo 2 isEqualTo 2 } throws Error::class
-        { 1 isEqualTo 1 isEqualTo 2 } throws Error::class
-        "123".isEqualTo("123").length isEqualTo 3
-        null isEqualTo null
-        { null isEqualTo 1 } throws Error::class
-        { 1 isEqualTo null } throws Error::class
+    @Test fun `should equal`() {
+        1 shouldEqual 1
+        { 1 shouldEqual 2 } throws Error::class
+        (OBJECT_A shouldEqual OBJECT_B) shouldBe OBJECT_B
+        1 shouldEqual 1 shouldEqual 1
+        { 1 shouldEqual 2 shouldEqual 2 } throws Error::class
+        { 1 shouldEqual 1 shouldEqual 2 } throws Error::class
+        "123".shouldEqual("123").length shouldEqual 3
+        null shouldEqual null
+        { null shouldEqual 1 } throws Error::class
+        { 1 shouldEqual null } throws Error::class
     }
 
-    @Test fun `is not equal to`() {
-        1 isNotEqualTo 2
-        { 1 isNotEqualTo 1 } throws Error::class
-        (Any() isNotEqualTo OBJECT_B) shouldBe OBJECT_B
-        1 isNotEqualTo 2 isNotEqualTo 1
-        { 1 isNotEqualTo 1 isNotEqualTo 2 } throws Error::class
-        { 1 isNotEqualTo 2 isNotEqualTo 2 } throws Error::class
-        null isNotEqualTo 1
-        1 isNotEqualTo null
-        { null isNotEqualTo null } throws Error::class
+    @Test fun `should not equal`() {
+        1 shouldNotEqual 2
+        { 1 shouldNotEqual 1 } throws Error::class
+        (Any() shouldNotEqual OBJECT_B) shouldBe OBJECT_B
+        1 shouldNotEqual 2 shouldNotEqual 1
+        { 1 shouldNotEqual 1 shouldNotEqual 2 } throws Error::class
+        { 1 shouldNotEqual 2 shouldNotEqual 2 } throws Error::class
+        null shouldNotEqual 1
+        1 shouldNotEqual null
+        { null shouldNotEqual null } throws Error::class
     }
 
-    @Test fun `array is equal to`() {
+    @Test fun `array should equal`() {
         val a = arrayOf(1, 2, 3)
-        a isEqualTo a.clone()
-        a.map { it.toByte() }.toByteArray().let { it isEqualTo it.clone() }
-        a.map { it.toChar() }.toCharArray().let { it isEqualTo it.clone() }
-        a.map { it.toShort() }.toShortArray().let { it isEqualTo it.clone() }
-        a.map { it }.toIntArray().let { it isEqualTo it.clone() }
-        a.map { it.toLong() }.toLongArray().let { it isEqualTo it.clone() }
-        a.map { it.toFloat() }.toFloatArray().let { it isEqualTo it.clone() }
-        a.map { it.toDouble() }.toDoubleArray().let { it isEqualTo it.clone() }
-        booleanArrayOf(true, false).let { it isEqualTo it.clone() }
+        a shouldEqual a.clone()
+        a.map { it.toByte() }.toByteArray().let { it shouldEqual it.clone() }
+        a.map { it.toChar() }.toCharArray().let { it shouldEqual it.clone() }
+        a.map { it.toShort() }.toShortArray().let { it shouldEqual it.clone() }
+        a.map { it }.toIntArray().let { it shouldEqual it.clone() }
+        a.map { it.toLong() }.toLongArray().let { it shouldEqual it.clone() }
+        a.map { it.toFloat() }.toFloatArray().let { it shouldEqual it.clone() }
+        a.map { it.toDouble() }.toDoubleArray().let { it shouldEqual it.clone() }
+        booleanArrayOf(true, false).let { it shouldEqual it.clone() }
     }
 
-    @Test fun `array is not equal to`() {
+    @Test fun `array should not equal`() {
         val a = arrayOf(1, 2, 3)
         val b = arrayOf(3, 4, 5)
-        a isNotEqualTo b
-        a.map { it.toByte() }.toByteArray() isNotEqualTo b.map { it.toByte() }.toByteArray()
-        a.map { it.toChar() }.toCharArray() isNotEqualTo b.map { it.toChar() }.toCharArray()
-        a.map { it.toShort() }.toShortArray() isNotEqualTo b.map { it.toShort() }.toShortArray()
-        a.map { it }.toIntArray() isNotEqualTo b.map { it }.toIntArray()
-        a.map { it.toLong() }.toLongArray() isNotEqualTo b.map { it.toLong() }.toLongArray()
-        a.map { it.toFloat() }.toFloatArray() isNotEqualTo b.map { it.toFloat() }.toFloatArray()
-        a.map { it.toDouble() }.toDoubleArray() isNotEqualTo b.map { it.toDouble() }.toDoubleArray()
-        booleanArrayOf(true, false) isNotEqualTo booleanArrayOf(false, true)
+        a shouldNotEqual b
+        a.map { it.toByte() }.toByteArray() shouldNotEqual b.map { it.toByte() }.toByteArray()
+        a.map { it.toChar() }.toCharArray() shouldNotEqual b.map { it.toChar() }.toCharArray()
+        a.map { it.toShort() }.toShortArray() shouldNotEqual b.map { it.toShort() }.toShortArray()
+        a.map { it }.toIntArray() shouldNotEqual b.map { it }.toIntArray()
+        a.map { it.toLong() }.toLongArray() shouldNotEqual b.map { it.toLong() }.toLongArray()
+        a.map { it.toFloat() }.toFloatArray() shouldNotEqual b.map { it.toFloat() }.toFloatArray()
+        a.map { it.toDouble() }.toDoubleArray() shouldNotEqual b.map { it.toDouble() }.toDoubleArray()
+        booleanArrayOf(true, false) shouldNotEqual booleanArrayOf(false, true)
     }
 
     @Test fun `is null`() {
@@ -107,7 +107,7 @@ class AssertUtilTest {
         OBJECT_A.isNotNull()
         OBJECT_A.isNotNull() shouldBe OBJECT_A
         { null.isNotNull() } throws Error::class
-        "123".isNotNull().length isEqualTo 3
+        "123".isNotNull().length shouldEqual 3
     }
 
     @Test fun `is true`() {
@@ -148,22 +148,22 @@ class AssertUtilTest {
 
     @Test fun `proof`() {
         "We can describe our tests" proof {
-            1 isEqualTo 1
+            1 shouldEqual 1
         }
         {
             "Test description" proof {
-                1 isEqualTo 2
+                1 shouldEqual 2
             }
-        }.throws(Error::class).message isEqualTo "Test description"
+        }.throws(Error::class).message shouldEqual "Test description"
         {
             "Test description" proof {
-                1 isEqualTo 1
-                1 isEqualTo 2
+                1 shouldEqual 1
+                1 shouldEqual 2
             }
-        }.throws(Error::class).message isEqualTo "Test description"
+        }.throws(Error::class).message shouldEqual "Test description"
     }
 
     @Test fun `proof in a expression body`() = "A proof can be done in a expression body" proof {
-        1 isEqualTo 1
+        1 shouldEqual 1
     }
 }

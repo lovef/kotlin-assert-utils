@@ -3,7 +3,7 @@ package se.lovef.assert.check
 import se.lovef.assert.isNotNull
 
 /**
- * `a passes IterableCheck({ it isEqualTo a1}, { it isEqualTo a2})`
+ * `a passes IterableCheck({ it shouldEqual a1}, { it shouldEqual a2})`
  * checks that `a` contains two elements that equals `a1` and `a2` respectively
  *
  * Date: 2017-12-03

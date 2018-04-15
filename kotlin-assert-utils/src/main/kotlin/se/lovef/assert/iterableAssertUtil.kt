@@ -25,7 +25,7 @@ fun <E> assertPairwise(a: Iterable<E>?, b: Iterable<E>?, assertionBlock: (E, E) 
     }
     if (a is Collection<E> && b is Collection<E>) {
         "a.size == ${a.size} == b.size == ${b.size}" proof {
-            a.size isEqualTo  b.size
+            a.size shouldEqual  b.size
         }
     }
     val iteratorA = a.iterator()

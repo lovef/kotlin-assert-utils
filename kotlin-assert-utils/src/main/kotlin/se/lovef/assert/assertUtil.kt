@@ -35,27 +35,27 @@ private fun equals(a: Any?, b: Any?) = when {
     else -> a == b
 }
 
-infix fun <T : Any?> T.isEqualTo(other: T): T {
+infix fun <T : Any?> T.shouldEqual(other: T): T {
     assertTrue("\n" +
             "Expected: $other\n" +
             "Got:      $this", equals(this, other))
     return other
 }
 
-infix fun <T : Any> T?.isNotEqualTo(other: T?): T? {
+infix fun <T : Any> T?.shouldNotEqual(other: T?): T? {
     assertThat("\n" +
             "Expected not: $other\n" +
             "Got:          $this", !equals(this, other))
     return other
 }
 
-fun <T : Any> T?.isNull() = apply { this isEqualTo null }
+fun <T : Any> T?.isNull() = apply { this shouldEqual null }
 
-fun <T : Any> T?.isNotNull() = apply { this isNotEqualTo null }!!
+fun <T : Any> T?.isNotNull() = apply { this shouldNotEqual null }!!
 
-fun Boolean?.isTrue() = apply { this isEqualTo true }
+fun Boolean?.isTrue() = apply { this shouldEqual true }
 
-fun Boolean?.isFalse() = apply { this isEqualTo false }
+fun Boolean?.isFalse() = apply { this shouldEqual false }
 
 infix fun <T : Any> T?.shouldBe(other: T?) = apply {
     assertTrue("\n" +

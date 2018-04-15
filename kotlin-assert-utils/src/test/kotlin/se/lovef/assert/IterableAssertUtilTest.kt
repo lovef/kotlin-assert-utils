@@ -1,7 +1,6 @@
 package se.lovef.assert
 
 import org.junit.Test
-import se.lovef.assert.check.ElementCountMismatchError
 import se.lovef.assert.check.IterableCheck
 
 /**
@@ -50,20 +49,20 @@ class IterableAssertUtilTest {
                 { assertPairwise(a.iterable(1), b.iterable(1, 2)) { _, _ -> } } throws Error::class
                 { assertPairwise(a.iterable(1, 2), b.iterable(1)) { _, _ -> } } throws Error::class
 
-                assertPairwise(a.iterable(1), b.iterable(1)) { a, b -> a isEqualTo b }
-                assertPairwise(a.iterable(null), b.iterable(null)) { a, b -> a isEqualTo b }
+                assertPairwise(a.iterable(1), b.iterable(1)) { a, b -> a shouldEqual b }
+                assertPairwise(a.iterable(null), b.iterable(null)) { a, b -> a shouldEqual b }
                 assertPairwise(null as Iterable<*>?, null as Iterable<*>?) { _, _ -> };
-                { assertPairwise(a.iterable(1), b.iterable(2)) { a, b -> a isEqualTo b } } throws Error::class
-                { assertPairwise(a.iterable(1), b.iterable(this)) { a, b -> a isEqualTo b } } throws Error::class
-                { assertPairwise(a.iterable(this), b.iterable(1)) { a, b -> a isEqualTo b } } throws Error::class
-                { assertPairwise(a.iterable(1), b.iterable(null)) { a, b -> a isEqualTo b } } throws Error::class
-                { assertPairwise(a.iterable(null), b.iterable(1)) { a, b -> a isEqualTo b } } throws Error::class
-                { assertPairwise(a.iterable(1), null) { a, b -> a isEqualTo b } } throws Error::class
-                { assertPairwise(null, b.iterable(1)) { a, b -> a isEqualTo b } } throws Error::class
+                { assertPairwise(a.iterable(1), b.iterable(2)) { a, b -> a shouldEqual b } } throws Error::class
+                { assertPairwise(a.iterable(1), b.iterable(this)) { a, b -> a shouldEqual b } } throws Error::class
+                { assertPairwise(a.iterable(this), b.iterable(1)) { a, b -> a shouldEqual b } } throws Error::class
+                { assertPairwise(a.iterable(1), b.iterable(null)) { a, b -> a shouldEqual b } } throws Error::class
+                { assertPairwise(a.iterable(null), b.iterable(1)) { a, b -> a shouldEqual b } } throws Error::class
+                { assertPairwise(a.iterable(1), null) { a, b -> a shouldEqual b } } throws Error::class
+                { assertPairwise(null, b.iterable(1)) { a, b -> a shouldEqual b } } throws Error::class
 
-                assertPairwise(a.iterable(1, 2), b.iterable(1, 2)) { a, b -> a isEqualTo b };
-                { assertPairwise(a.iterable(1, 2), b.iterable(2, 2)) { a, b -> a isEqualTo b } } throws Error::class
-                { assertPairwise(a.iterable(1, 2), b.iterable(1, 3)) { a, b -> a isEqualTo b } } throws Error::class
+                assertPairwise(a.iterable(1, 2), b.iterable(1, 2)) { a, b -> a shouldEqual b };
+                { assertPairwise(a.iterable(1, 2), b.iterable(2, 2)) { a, b -> a shouldEqual b } } throws Error::class
+                { assertPairwise(a.iterable(1, 2), b.iterable(1, 3)) { a, b -> a shouldEqual b } } throws Error::class
             }
         }
     }
