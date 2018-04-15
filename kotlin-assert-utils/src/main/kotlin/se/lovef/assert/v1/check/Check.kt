@@ -1,4 +1,4 @@
-package se.lovef.assert.check
+package se.lovef.assert.v1.check
 
 /**
  * Runs a check on an object.

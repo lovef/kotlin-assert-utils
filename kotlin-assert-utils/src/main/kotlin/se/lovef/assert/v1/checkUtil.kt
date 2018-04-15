@@ -1,6 +1,6 @@
-package se.lovef.assert
+package se.lovef.assert.v1
 
-import se.lovef.assert.check.Check
+import se.lovef.assert.v1.check.Check
 
 /*
  * Date: 2017-12-03

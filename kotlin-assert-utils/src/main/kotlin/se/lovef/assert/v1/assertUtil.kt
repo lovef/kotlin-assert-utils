@@ -1,4 +1,4 @@
-package se.lovef.assert
+package se.lovef.assert.v1
 
 import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat

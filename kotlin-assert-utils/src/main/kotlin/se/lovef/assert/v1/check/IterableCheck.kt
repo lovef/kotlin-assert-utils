@@ -1,6 +1,6 @@
-package se.lovef.assert.check
+package se.lovef.assert.v1.check
 
-import se.lovef.assert.shouldNotBeNull
+import se.lovef.assert.v1.shouldNotBeNull
 
 /**
  * `a passes IterableCheck({ it shouldEqual a1}, { it shouldEqual a2})`
