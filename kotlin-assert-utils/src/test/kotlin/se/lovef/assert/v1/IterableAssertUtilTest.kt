@@ -1,7 +1,7 @@
-package se.lovef.assert
+package se.lovef.assert.v1
 
 import org.junit.Test
-import se.lovef.assert.check.IterableCheck
+import se.lovef.assert.v1.check.IterableCheck
 
 /**
  * Date: 2017-03-31

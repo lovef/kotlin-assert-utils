@@ -1,4 +1,4 @@
-package se.lovef.assert
+package se.lovef.assert.v1
 
 import org.junit.Test
 
@@ -15,7 +15,7 @@ class CheckUtilTest {
 
     @Test fun `'passes' returns checked object`() {
         val a = Any()
-        a passes check {  } shouldBe a
+        a passes check { } shouldBe a
     }
 
     @Test fun `check on nullable`() {

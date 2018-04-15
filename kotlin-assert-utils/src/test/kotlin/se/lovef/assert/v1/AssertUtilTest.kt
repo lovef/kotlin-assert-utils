@@ -1,4 +1,4 @@
-package se.lovef.assert
+package se.lovef.assert.v1
 
 import org.junit.Test
 import java.util.*

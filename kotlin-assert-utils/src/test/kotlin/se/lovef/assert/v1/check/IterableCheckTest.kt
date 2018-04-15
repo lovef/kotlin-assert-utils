@@ -1,10 +1,10 @@
-package se.lovef.assert.check
+package se.lovef.assert.v1.check
 
 import org.junit.Test
-import se.lovef.assert.IterableAssertUtilTest.TestIterable
-import se.lovef.assert.shouldEqual
-import se.lovef.assert.passes
-import se.lovef.assert.throws
+import se.lovef.assert.v1.IterableAssertUtilTest.TestIterable
+import se.lovef.assert.v1.shouldEqual
+import se.lovef.assert.v1.passes
+import se.lovef.assert.v1.throws
 
 /**
  * Date: 2017-12-03

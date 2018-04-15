@@ -1,4 +1,4 @@
-package se.lovef.assert
+package se.lovef.assert.v1
 
 import junit.framework.AssertionFailedError
 import kotlin.reflect.KClass
