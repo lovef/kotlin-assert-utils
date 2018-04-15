@@ -8,7 +8,7 @@ import org.intellij.lang.annotations.Language
  * @author Love
  */
 
-infix fun CharSequence?.doesContain(other: Any?) = isNotNull().apply {
+infix fun CharSequence?.doesContain(other: Any?) = shouldNotBeNull().apply {
     MatcherAssert.assertThat("'$this' does contain '$other'", this.contains(other as? CharSequence ?: "$other"))
 }
 
@@ -19,11 +19,11 @@ infix fun CharSequence?.doesNotContain(other: Any?) = apply {
     )
 }
 
-infix fun CharSequence?.doesMatch(@Language("RegExp") regex: CharSequence) = isNotNull().apply {
+infix fun CharSequence?.doesMatch(@Language("RegExp") regex: CharSequence) = shouldNotBeNull().apply {
     MatcherAssert.assertThat("'$this' does match '$regex'", this.toString().contains(regex.toString().toRegex()))
 }
 
-infix fun CharSequence?.doesMatch(regex: Regex) = isNotNull().apply {
+infix fun CharSequence?.doesMatch(regex: Regex) = shouldNotBeNull().apply {
     MatcherAssert.assertThat("'$this' does match '$regex'", this.toString().contains(regex))
 }
 
@@ -38,7 +38,7 @@ infix fun CharSequence?.doesNotMatch(@Language("RegExp") regex: Regex) = apply {
     MatcherAssert.assertThat("'$this' does not match '$regex'", this == null || !this.contains(regex))
 }
 
-infix fun CharSequence?.doesStartWith(start: Any?) = isNotNull().apply {
+infix fun CharSequence?.doesStartWith(start: Any?) = shouldNotBeNull().apply {
     MatcherAssert.assertThat("'$this' does start with '$start'", this.startsWith(start as? CharSequence ?: "$start"))
 }
 
@@ -49,7 +49,7 @@ infix fun CharSequence?.doesNotStartWith(start: Any?) = apply {
     )
 }
 
-infix fun CharSequence?.doesEndWith(end: Any?) = isNotNull().apply {
+infix fun CharSequence?.doesEndWith(end: Any?) = shouldNotBeNull().apply {
     MatcherAssert.assertThat("'$this' does end with '$end'", this.endsWith(end as? CharSequence ?: "$end"))
 }
 

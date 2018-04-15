@@ -1,6 +1,6 @@
 package se.lovef.assert.check
 
-import se.lovef.assert.isNotNull
+import se.lovef.assert.shouldNotBeNull
 
 /**
  * `a passes IterableCheck({ it shouldEqual a1}, { it shouldEqual a2})`
@@ -14,7 +14,7 @@ class IterableCheck<in E>(vararg elementChecks: (E) -> Unit) : Check<Iterable<E>
     private val elementChecks = elementChecks.asIterable()
 
     override fun invoke(toCheck: Iterable<E>?) {
-        toCheck.isNotNull()
+        toCheck.shouldNotBeNull()
         toCheck!!
         val elementCheckIterator = elementChecks.iterator()
         for (it in toCheck) {

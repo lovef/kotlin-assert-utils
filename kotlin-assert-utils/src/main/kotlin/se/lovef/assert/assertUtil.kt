@@ -49,9 +49,9 @@ infix fun <T : Any> T?.shouldNotEqual(other: T?): T? {
     return other
 }
 
-fun <T : Any> T?.isNull() = apply { this shouldEqual null }
+fun <T : Any> T?.shouldBeNull() = apply { this shouldEqual null }
 
-fun <T : Any> T?.isNotNull() = apply { this shouldNotEqual null }!!
+fun <T : Any> T?.shouldNotBeNull() = apply { this shouldNotEqual null }!!
 
 fun Boolean?.isTrue() = apply { this shouldEqual true }
 
@@ -74,12 +74,12 @@ infix fun <T : Any> T?.shouldNotBe(other: T?): T? {
  *
  * - `a`, `b` and `c` is not null
  * - The difference between `a` and `b` is less then or equal to `c` */
-infix fun <T : Number, R : Number> T?.isCloseTo(other: R?) = Difference(this.isNotNull(), other.isNotNull())
+infix fun <T : Number, R : Number> T?.isCloseTo(other: R?) = Difference(this.shouldNotBeNull(), other.shouldNotBeNull())
 
 class Difference<out T : Number, out R : Number>(private val a: T, private val b: R) {
     infix fun tolerance(t: Number?) {
         val difference = Math.abs(a.toDouble() - b.toDouble())
-        assertTrue("To large difference between $a and $b: $difference > $t", difference <= t.isNotNull().toDouble())
+        assertTrue("To large difference between $a and $b: $difference > $t", difference <= t.shouldNotBeNull().toDouble())
     }
 }
 
