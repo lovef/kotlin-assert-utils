@@ -97,17 +97,17 @@ class AssertUtilTest {
         booleanArrayOf(true, false) shouldNotEqual booleanArrayOf(false, true)
     }
 
-    @Test fun `is null`() {
-        null.isNull()
-        null.isNull() shouldBe null
-        { OBJECT_A.isNull() } throws Error::class
+    @Test fun `should be null`() {
+        null.shouldBeNull()
+        null.shouldBeNull() shouldBe null
+        { OBJECT_A.shouldBeNull() } throws Error::class
     }
 
-    @Test fun `is not null`() {
-        OBJECT_A.isNotNull()
-        OBJECT_A.isNotNull() shouldBe OBJECT_A
-        { null.isNotNull() } throws Error::class
-        "123".isNotNull().length shouldEqual 3
+    @Test fun `should not be null`() {
+        OBJECT_A.shouldNotBeNull()
+        OBJECT_A.shouldNotBeNull() shouldBe OBJECT_A
+        { null.shouldNotBeNull() } throws Error::class
+        "123".shouldNotBeNull().length shouldEqual 3
     }
 
     @Test fun `is true`() {
