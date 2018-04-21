@@ -9,6 +9,20 @@ import se.lovef.assert.v1.check.IterableCheck
  * @author Love
  */
 
+infix fun <E> Iterable<E>?.shouldContain(element: E): Iterable<E> {
+    if (this == null || !this.contains(element)) {
+        throw AssertionError("Expected to contain $element:\n$this")
+    }
+    return this
+}
+
+infix fun <E> Iterable<E>?.shouldNotContain(element: E): Iterable<E>? {
+    if (this != null && this.contains(element)) {
+        throw AssertionError("Expected to NOT contain $element:\n$this")
+    }
+    return this
+}
+
 /** Executes [assertionBlock] on all elements from [a] and [b] in pairs.
  * If only one of [a] and [b] is null then [AssertionFailedError]
  *
@@ -25,14 +39,14 @@ fun <E> assertPairwise(a: Iterable<E>?, b: Iterable<E>?, assertionBlock: (E, E) 
     }
     if (a is Collection<E> && b is Collection<E>) {
         "a.size == ${a.size} == b.size == ${b.size}" proof {
-            a.size shouldEqual  b.size
+            a.size shouldEqual b.size
         }
     }
     val iteratorA = a.iterator()
     val iteratorB = b.iterator()
     while (iteratorA.hasNext()) {
         val elementA = iteratorA.next()
-        if(!iteratorB.hasNext())
+        if (!iteratorB.hasNext())
             Assert.fail("to few elements in $b")
         val elementB = iteratorB.next()
         try {

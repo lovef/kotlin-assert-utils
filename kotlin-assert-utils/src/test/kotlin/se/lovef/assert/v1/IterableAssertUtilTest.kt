@@ -36,6 +36,27 @@ class IterableAssertUtilTest {
         TestIterableCreator()
     )
 
+    private fun <E> iterators(vararg elements: E) = iterableCreators.map { it.iterable(*elements) }
+
+    @Test fun `iterable should contain`() {
+        iterators(1, "2", null).forEach {
+            val returned = it shouldContain 1 shouldContain "2" shouldContain null
+            returned shouldBe it
+            { it shouldContain -1 } throws Error::class
+            ((it as Iterable<*>?) shouldContain "2").contains("2") // Return type is non nullable
+        }
+        ; { (null as Iterable<*>?) shouldContain "2" } throws Error::class
+    }
+
+    @Test fun `iterable should NOT contain`() {
+        iterators(1, "2", null).forEach {
+            val returned = it shouldNotContain -1
+            returned shouldBe it
+            { it shouldNotContain "2" } throws Error::class
+        }
+        (null as Iterable<*>?) shouldNotContain -1
+    }
+
     @Test fun `pairwise assert on iterables`() {
         val iteratorCombinations = iterableCreators
             .flatMap { first -> iterableCreators.map { first to it } }
