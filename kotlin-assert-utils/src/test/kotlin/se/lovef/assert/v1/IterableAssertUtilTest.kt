@@ -9,7 +9,7 @@ import se.lovef.assert.v1.check.IterableCheck
  */
 class IterableAssertUtilTest {
 
-    class TestIterable<out E>(vararg elements: E): Iterable<E> {
+    class TestIterable<out E>(vararg elements: E) : Iterable<E> {
         private val elements = elements.asList()
         override fun iterator() = elements.iterator()
     }
@@ -18,32 +18,28 @@ class IterableAssertUtilTest {
         fun <E> iterable(vararg elements: E): Iterable<E>
     }
 
-    class SetCreator: IterableCreator {
+    class SetCreator : IterableCreator {
         override fun <E> iterable(vararg elements: E) = setOf(*elements)
     }
 
-    class ListCreator: IterableCreator {
-        override fun <E>iterable(vararg elements: E) = listOf(*elements)
+    class ListCreator : IterableCreator {
+        override fun <E> iterable(vararg elements: E) = listOf(*elements)
     }
 
-    class TestIterableCreator: IterableCreator {
-        override fun <E>iterable(vararg elements: E) = TestIterable(*elements)
+    class TestIterableCreator : IterableCreator {
+        override fun <E> iterable(vararg elements: E) = TestIterable(*elements)
     }
+
+    private val iterableCreators = listOf(
+        SetCreator(),
+        ListCreator(),
+        TestIterableCreator()
+    )
 
     @Test fun `pairwise assert on iterables`() {
-        listOf(
-                SetCreator() to SetCreator(),
-                SetCreator() to ListCreator(),
-                SetCreator() to TestIterableCreator(),
-                ListCreator() to SetCreator(),
-                ListCreator() to ListCreator(),
-                ListCreator() to TestIterableCreator(),
-                TestIterableCreator() to SetCreator(),
-                TestIterableCreator() to ListCreator(),
-                TestIterableCreator() to TestIterableCreator()
-        ).forEach {
-            val a = it.first
-            val b = it.second
+        val iteratorCombinations = iterableCreators
+            .flatMap { first -> iterableCreators.map { first to it } }
+        iteratorCombinations.forEach { (a, b) ->
             "pairwise assertion works with $a and $b" proof {
                 assertPairwise(a.iterable(1), b.iterable(1)) { _, _ -> };
                 { assertPairwise(a.iterable(1), b.iterable(1, 2)) { _, _ -> } } throws Error::class
