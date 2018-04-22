@@ -31,5 +31,7 @@ class ExampleTest {
 
         true.shouldBeTrue();
         { null.shouldBeTrue() } throws Error::class
+
+        listOf(1, "2", null) shouldContain "2" shouldNotContain -1
     }
 }
