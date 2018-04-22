@@ -38,6 +38,8 @@ class ExampleTest {
 
         true.shouldBeTrue();
         { null.shouldBeTrue() } throws Error::class
+
+        listOf(1, "2", null) shouldContain "2" shouldNotContain -1
     }
 }
 ```
@@ -48,11 +50,10 @@ class ExampleTest {
 apply plugin: 'kotlin'
 
 dependencies {
-    testCompile 'se.lovef:kotlin-assert-utils:0.4.0'
+    testCompile 'se.lovef:kotlin-assert-utils:0.5.0'
 }
 
 repositories {
     mavenCentral()
 }
-
 ```
