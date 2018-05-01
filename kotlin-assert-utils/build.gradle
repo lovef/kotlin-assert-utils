@@ -102,7 +102,7 @@ bintray {
 
         version {
             name = project.version
-            vcsTag = rootProject.getReleaseTag()
+            vcsTag = gitVersion.tag
             desc = project.description
             gpg {
                 sign = true //Determines whether to GPG sign the files. The default is false
