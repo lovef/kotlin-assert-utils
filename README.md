@@ -50,7 +50,7 @@ class ExampleTest {
 apply plugin: 'kotlin'
 
 dependencies {
-    testCompile 'se.lovef:kotlin-assert-utils:0.5.0'
+    testCompile 'se.lovef:kotlin-assert-utils:0.6.0'
 }
 
 repositories {
