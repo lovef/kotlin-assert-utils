@@ -14,7 +14,7 @@ buildscript {
 
 apply plugin: 'se.lovef.git-version'
 
-version gitVersion('0.5')
+version gitVersion('0.6')
 
 allprojects {
     version = rootProject.version
