@@ -8,11 +8,13 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-        classpath 'se.lovef:gradle-git-version-plugin:0.1.1'
+        classpath 'se.lovef:gradle-git-version-plugin:0.2.0'
     }
 }
 
 apply plugin: 'se.lovef.git-version'
+
+version gitVersion('0.5')
 
 allprojects {
     version = rootProject.version
