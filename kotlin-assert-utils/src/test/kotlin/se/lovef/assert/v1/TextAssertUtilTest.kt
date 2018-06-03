@@ -52,17 +52,17 @@ class TextAssertUtilTest {
         null shouldNotMatch "shit".toRegex()
     }
 
-    @Test fun `does start with`() {
-        "my awesome string" as CharSequence doesStartWith "my" as CharSequence shouldBe "my awesome string"
-        { "my awesome string" doesStartWith "awesome" } throws Error::class
+    @Test fun `should start with`() {
+        ("my awesome string" as CharSequence).shouldStartWith("my" as CharSequence) shouldBe "my awesome string"
+        { "my awesome string" shouldStartWith "awesome" } throws Error::class
 
-        "1337 string" doesStartWith 1337
-        { "string 1337" doesStartWith 1337 } throws Error::class
+        "1337 string" shouldStartWith 1337
+        { "string 1337" shouldStartWith 1337 } throws Error::class
 
-        "null string" doesStartWith null
-        { "string null" doesStartWith null } throws Error::class
+        "null string" shouldStartWith null
+        { "string null" shouldStartWith null } throws Error::class
 
-        { null doesStartWith "shit" } throws Error::class
+        { null shouldStartWith "shit" } throws Error::class
     }
 
     @Test fun `should not start with`() {

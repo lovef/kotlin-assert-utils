@@ -38,8 +38,14 @@ infix fun CharSequence?.shouldNotMatch(@Language("RegExp") regex: Regex) = apply
     MatcherAssert.assertThat("'$this' should not match '$regex'", this == null || !this.contains(regex))
 }
 
+@Deprecated("Use shouldStartWith instead",
+    ReplaceWith("this.shouldStartWith(start)", "se.lovef.assert.v1.TextAssertUtilKt.shouldStartWith"))
 infix fun CharSequence?.doesStartWith(start: Any?) = shouldNotBeNull().apply {
     MatcherAssert.assertThat("'$this' does start with '$start'", this.startsWith(start as? CharSequence ?: "$start"))
+}
+
+infix fun CharSequence?.shouldStartWith(start: Any?) = shouldNotBeNull().apply {
+    MatcherAssert.assertThat("'$this' should start with '$start'", this.startsWith(start as? CharSequence ?: "$start"))
 }
 
 infix fun CharSequence?.shouldNotStartWith(start: Any?) = apply {
