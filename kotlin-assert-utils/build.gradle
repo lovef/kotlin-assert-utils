@@ -7,7 +7,7 @@ description = "Kotlin JUnit 4 Assert Utilities"
 println "$group:${project.name}:$version"
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'org.jetbrains.kotlin:kotlin-stdlib'
     compile 'junit:junit:4.12'
 }
 
