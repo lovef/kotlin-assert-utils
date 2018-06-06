@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/lovef/kotlin-assert-utils.svg?branch=master)](https://travis-ci.org/lovef/kotlin-assert-utils)
+[![Download](https://api.bintray.com/packages/lovef/maven/kotlin-assert-utils/images/download.svg)](https://bintray.com/lovef/maven/kotlin-assert-utils/_latestVersion)
 
 # Kotlin assert utils
 
