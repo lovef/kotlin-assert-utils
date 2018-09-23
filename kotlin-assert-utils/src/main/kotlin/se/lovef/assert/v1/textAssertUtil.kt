@@ -65,3 +65,27 @@ infix fun CharSequence?.shouldNotEndWith(end: Any?) = apply {
         this == null || !this.endsWith(end as? CharSequence ?: "$end")
     )
 }
+
+fun <T: CharSequence> T.shouldBeEmpty() = apply {
+    MatcherAssert.assertThat(
+        "'$this' should be empty",
+        this.isEmpty())
+}
+
+fun <T: CharSequence> T?.shouldNotBeEmpty() = apply {
+    MatcherAssert.assertThat(
+        "'$this' should NOT be empty",
+        this != null && this.isNotEmpty())
+}!!
+
+fun <T: CharSequence> T.shouldBeBlank() = apply {
+    MatcherAssert.assertThat(
+        "'$this' should be blank",
+        this.isBlank())
+}
+
+fun <T: CharSequence> T?.shouldNotBeBlank() = apply {
+    MatcherAssert.assertThat(
+        "'$this' should NOT be blank",
+        this != null && this.isNotBlank())
+}!!

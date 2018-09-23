@@ -9,6 +9,10 @@ import se.lovef.assert.v1.check.IterableCheck
  */
 class IterableAssertUtilTest {
 
+    object TestType {
+        fun testFun() { }
+    }
+
     class TestIterable<out E>(vararg elements: E) : Iterable<E> {
         private val elements = elements.asList()
         override fun iterator() = elements.iterator()
@@ -57,6 +61,23 @@ class IterableAssertUtilTest {
         (null as Iterable<*>?) shouldNotContain -1
     }
 
+    @Test fun `iterable should be empty`() {
+        iterators<Any>().forEach { it.shouldBeEmpty() shouldBe it }
+        iterators<Any>(1, 2, 3).forEach { { it.shouldBeEmpty() } throws Error::class }
+        emptyList<TestType?>().shouldBeEmpty().typeIsListOfTestTypeObjects()
+    }
+
+    @Test fun `iterable should NOT be empty`() {
+        iterators<Any>(1, 2, 3).forEach { it.shouldNotBeEmpty() shouldBe it }
+        iterators<Any>().forEach { { it.shouldNotBeEmpty() } throws Error::class }
+        (listOf<TestType?>(TestType) as List<TestType?>?).shouldNotBeEmpty().typeIsListOfTestTypeObjects()
+        ; { (null as List<TestType?>?).shouldNotBeEmpty() } throws Error::class
+        ; { (null as Iterable<TestType?>?).shouldNotBeEmpty() } throws Error::class
+    }
+
+    /** Utility to check compile time type */
+    private fun List<TestType?>.typeIsListOfTestTypeObjects() = this
+
     @Test fun `pairwise assert on iterables`() {
         val iteratorCombinations = iterableCreators
             .flatMap { first -> iterableCreators.map { first to it } }
@@ -89,3 +110,4 @@ class IterableAssertUtilTest {
         listCheck<Any>({}) typeIs IterableCheck::class
     }
 }
+
