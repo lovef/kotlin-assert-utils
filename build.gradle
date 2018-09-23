@@ -6,7 +6,7 @@ plugins {
 
 group 'se.lovef'
 
-version gitVersion('0.6')
+version gitVersion('0.7')
 
 allprojects {
     version = rootProject.version
