@@ -103,4 +103,38 @@ class TextAssertUtilTest {
 
         null shouldNotEndWith "shit"
     }
+
+    @Test fun `should be empty`() {
+        "".shouldBeEmpty().typeIsString()
+        ("" as CharSequence).shouldBeEmpty()
+        ; { ("    " as CharSequence).shouldBeEmpty() } throws Error::class
+        ; { ("test" as CharSequence).shouldBeEmpty() } throws Error::class
+    }
+
+    @Test fun `should NOT be empty`() {
+        "                       ".shouldNotBeEmpty().typeIsString()
+        ("    " as CharSequence?).shouldNotBeEmpty()
+        ("test" as CharSequence?).shouldNotBeEmpty()
+        ; { ("" as CharSequence?).shouldNotBeEmpty() } throws Error::class
+        ; { (null as CharSequence?).shouldNotBeEmpty() } throws Error::class
+    }
+
+    @Test fun `should be blank`() {
+        "                  ".shouldBeBlank().typeIsString()
+        ("" as CharSequence).shouldBeBlank()
+        ("    " as CharSequence).shouldBeBlank()
+        ; { ("  test  " as CharSequence).shouldBeBlank() } throws Error::class
+    }
+
+    @Test fun `should NOT be blank`() {
+        "  test                    ".shouldNotBeBlank().typeIsString()
+        ("  test  " as CharSequence).shouldNotBeBlank()
+        ; { ("" as CharSequence).shouldNotBeBlank() } throws Error::class
+        ; { ("    " as CharSequence).shouldNotBeBlank() } throws Error::class
+        ; { (null as CharSequence?).shouldNotBeBlank() } throws Error::class
+    }
+
+    /** Utility to check compile time type */
+    private fun String.typeIsString() = this
 }
+

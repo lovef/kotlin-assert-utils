@@ -23,6 +23,18 @@ infix fun <E> Iterable<E>?.shouldNotContain(element: E): Iterable<E>? {
     return this
 }
 
+fun <E: Any?, T: Iterable<E>> T.shouldBeEmpty() = apply {
+    if (this is Collection<*> && this.isNotEmpty() || this.iterator().hasNext()) {
+        throw AssertionError("Expected to be empty:\n$this")
+    }
+}
+
+fun <E: Any?, T: Iterable<E>> T?.shouldNotBeEmpty() = apply {
+    if (this == null || this is Collection<*> && this.isEmpty() || !this.iterator().hasNext()) {
+        throw AssertionError("Expected to NOT be empty:\n$this")
+    }
+}!!
+
 /** Executes [assertionBlock] on all elements from [a] and [b] in pairs.
  * If only one of [a] and [b] is null then [AssertionFailedError]
  *
