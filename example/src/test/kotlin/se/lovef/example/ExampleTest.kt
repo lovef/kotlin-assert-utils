@@ -32,6 +32,10 @@ class ExampleTest {
         true.shouldBeTrue();
         { null.shouldBeTrue() } throws Error::class
 
-        listOf(1, "2", null) shouldContain "2" shouldNotContain -1
+        listOf(1, "2", null).shouldNotBeEmpty() shouldContain "2" shouldNotContain -1
+
+        { listOf(1, 2, 3) shouldEqual intArrayOf(1, 2, 3) }
+            .throws(Error::class)
+            .message shouldContain "<ArrayList> [1, 2, 3]" shouldContain "<int[]> [1, 2, 3]"
     }
 }
