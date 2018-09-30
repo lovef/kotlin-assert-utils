@@ -51,6 +51,26 @@ class AssertUtilTest {
         errorMessageOf { fail("message: {0}", this) } shouldEqual "message: $formatted"
     }
 
+    enum class Foo {
+        BAR;
+        enum class Foo {
+            BAR;
+        }
+    }
+
+    @Test fun `fail error message includes type when necessary`() {
+        errorMessageOf { fail("{0}, {1}", Foo.BAR, "BAR") } shouldEqual "<Foo> BAR, <String> BAR"
+        errorMessageOf { fail("{0}, {1}", Foo.BAR, Foo.Foo.BAR) } shouldEqual "" +
+                "<se.lovef.assert.v1.AssertUtilTest\$Foo> BAR, " +
+                "<se.lovef.assert.v1.AssertUtilTest\$Foo\$Foo> BAR"
+        errorMessageOf { fail("{0}, {1}", null, "null") } shouldEqual "null, <String> null"
+        errorMessageOf { fail("{0}, {1}, {2}", null, Foo.BAR, Foo.Foo.BAR) } shouldEqual "" +
+                "null, " +
+                "<se.lovef.assert.v1.AssertUtilTest\$Foo> BAR, " +
+                "<se.lovef.assert.v1.AssertUtilTest\$Foo\$Foo> BAR"
+    }
+
+
     private fun errorMessageOf(function: () -> Unit) = function.throws(Error::class).message
 
 

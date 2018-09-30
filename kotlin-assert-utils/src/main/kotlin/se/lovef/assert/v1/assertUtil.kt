@@ -17,8 +17,14 @@ import kotlin.reflect.KClass
  * The [arguments] will be prettified before added to the message, eg arrays are formatted like a [List].
  */
 fun fail(messagePattern: String, vararg arguments: Any?) {
-    val prettifiedArguments = arguments.map { stringOf(it) }.toTypedArray()
-    val message = MessageFormat.format(messagePattern, *prettifiedArguments)
+    var prettifiedArguments: List<String?> = arguments.map { stringOf(it) }
+    if (prettifiedArguments.distinct() != prettifiedArguments) {
+        prettifiedArguments = arguments.map { it?.let { "<" + it.javaClass.simpleName + "> " + stringOf(it) } }
+    }
+    if (prettifiedArguments.distinct() != prettifiedArguments) {
+        prettifiedArguments = arguments.map { it?.let { "<" + it.javaClass.name + "> " + stringOf(it) } }
+    }
+    val message = MessageFormat.format(messagePattern, *prettifiedArguments.toTypedArray())
     org.junit.Assert.fail(message)
 }
 
