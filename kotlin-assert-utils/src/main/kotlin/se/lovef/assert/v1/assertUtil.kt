@@ -1,10 +1,9 @@
 package se.lovef.assert.v1
 
 import org.hamcrest.MatcherAssert
-import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsInstanceOf
-import org.junit.Assert
 import org.junit.Assert.assertTrue
+import java.text.MessageFormat
 import java.util.*
 import kotlin.reflect.KClass
 
@@ -13,6 +12,29 @@ import kotlin.reflect.KClass
  * @author Love
  */
 
+/**
+ * Fail with message formatted in [MessageFormat.format].
+ * The [arguments] will be prettified before added to the message, eg arrays are formatted like a [List].
+ */
+fun fail(messagePattern: String, vararg arguments: Any?) {
+    val prettifiedArguments = arguments.map { stringOf(it) }.toTypedArray()
+    val message = MessageFormat.format(messagePattern, *prettifiedArguments)
+    org.junit.Assert.fail(message)
+}
+
+private fun stringOf(a: Any?) = when (a) {
+    is Array<*> -> a.toList().toString()
+    is ByteArray -> a.toList().toString()
+    is CharArray -> a.toList().toString()
+    is ShortArray -> a.toList().toString()
+    is IntArray -> a.toList().toString()
+    is LongArray -> a.toList().toString()
+    is FloatArray -> a.toList().toString()
+    is DoubleArray -> a.toList().toString()
+    is BooleanArray -> a.toList().toString()
+    else -> a.toString()
+}
+
 /** `a typeIs T::class asserts that `a` is an instance of `T`.
  *
  * `a` is returned as `T` after successful assertion. */
@@ -20,6 +42,26 @@ import kotlin.reflect.KClass
 infix fun <T : Any, R : Any> T?.typeIs(type: KClass<R>): R {
     MatcherAssert.assertThat("$this type is ${type.java.simpleName}", this, IsInstanceOf(type.java))
     return this as R
+}
+
+infix fun <T : Any?> T.shouldEqual(other: T): T {
+    if (!equals(this, other))
+        fail("\n" +
+                "Expected: {0}\n" +
+                "Got:      {1}",
+            other,
+            this)
+    return other
+}
+
+infix fun <T : Any> T?.shouldNotEqual(other: T?): T? {
+    if (equals(this, other))
+        fail("\n" +
+                "Expected not: {0}\n" +
+                "Got:          {1}",
+            other,
+            this)
+    return other
 }
 
 private fun equals(a: Any?, b: Any?) = when {
@@ -35,20 +77,6 @@ private fun equals(a: Any?, b: Any?) = when {
     else -> a == b
 }
 
-infix fun <T : Any?> T.shouldEqual(other: T): T {
-    assertTrue("\n" +
-            "Expected: $other\n" +
-            "Got:      $this", equals(this, other))
-    return other
-}
-
-infix fun <T : Any> T?.shouldNotEqual(other: T?): T? {
-    assertThat("\n" +
-            "Expected not: $other\n" +
-            "Got:          $this", !equals(this, other))
-    return other
-}
-
 fun <T : Any> T?.shouldBeNull() = apply { this shouldEqual null }
 
 fun <T : Any> T?.shouldNotBeNull() = apply { this shouldNotEqual null }!!
@@ -57,16 +85,25 @@ fun Boolean?.shouldBeTrue() = apply { this shouldEqual true }
 
 fun Boolean?.shouldBeFalse() = apply { this shouldEqual false }
 
-infix fun <T : Any> T?.shouldBe(other: T?) = apply {
-    assertTrue("\n" +
-            "Expected:          $this\n" +
-            "Same reference as: $other", this === other)
+infix fun <T : Any> T?.shouldBe(other: T?): T? {
+    if (this !== other) {
+        fail("\n" +
+                "Expected:          {0}\n" +
+                "Same reference as: {1}",
+            other,
+            this)
+    }
+    return other
 }
 
 infix fun <T : Any> T?.shouldNotBe(other: T?): T? {
-    Assert.assertTrue("\n" +
-            "Expected:              $this\n" +
-            "Not same reference as: $other", this !== other)
+    if(this === other) {
+        fail("\n" +
+                "Expected:              {0}\n" +
+                "Not same reference as: {1}",
+            other,
+            this)
+    }
     return other
 }
 

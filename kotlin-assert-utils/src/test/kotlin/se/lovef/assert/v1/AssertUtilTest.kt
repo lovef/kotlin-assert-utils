@@ -9,6 +9,51 @@ import java.util.*
  */
 class AssertUtilTest {
 
+    @Test fun `simple fail`() {
+        errorMessageOf { fail("message") } shouldEqual "message"
+    }
+
+    @Test fun `fail with objects`() {
+        errorMessageOf { fail("message: {0} {1} {0}", 0, 1) } shouldEqual "message: 0 1 0"
+        errorMessageOf { fail("message: {0}", "Hello") } shouldEqual "message: Hello"
+    }
+
+    @Test fun `fail with list in message`() {
+        listOf('a', "abc", 1, null) shouldBeFormattedAs "[a, abc, 1, null]"
+    }
+
+    @Test fun `fail with array in message`() {
+        arrayOf('a', "abc", 1, null) shouldBeFormattedAs "[a, abc, 1, null]"
+        byteArrayOf(1, 2, 3) shouldBeFormattedAs "[1, 2, 3]"
+        charArrayOf('a', 'b', 'c') shouldBeFormattedAs "[a, b, c]"
+        shortArrayOf(2, 3, 4) shouldBeFormattedAs "[2, 3, 4]"
+        intArrayOf(3, 4, 5) shouldBeFormattedAs "[3, 4, 5]"
+        longArrayOf(4, 5, 6) shouldBeFormattedAs "[4, 5, 6]"
+        floatArrayOf(5f, 6f, 7f) shouldBeFormattedAs "[5.0, 6.0, 7.0]"
+        doubleArrayOf(6.0, 7.0, 8.0) shouldBeFormattedAs "[6.0, 7.0, 8.0]"
+        booleanArrayOf(false, true) shouldBeFormattedAs "[false, true]"
+    }
+
+    object CustomObject {
+        override fun toString() = "Custom toString()"
+    }
+
+    @Test fun `fail with custom object in message`() {
+        CustomObject shouldBeFormattedAs CustomObject.toString()
+    }
+
+    @Test fun `fail with null in message`() {
+        null shouldBeFormattedAs "null"
+    }
+
+
+    private infix fun Any?.shouldBeFormattedAs(formatted: String) {
+        errorMessageOf { fail("message: {0}", this) } shouldEqual "message: $formatted"
+    }
+
+    private fun errorMessageOf(function: () -> Unit) = function.throws(Error::class).message
+
+
     @Test fun `type is`() {
         this typeIs AssertUtilTest::class shouldBe this
         this typeIs Any::class
@@ -73,29 +118,37 @@ class AssertUtilTest {
     @Test fun `array should equal`() {
         val a = arrayOf(1, 2, 3)
         a shouldEqual a.clone()
-        a.map { it.toByte() }.toByteArray().let { it shouldEqual it.clone() }
-        a.map { it.toChar() }.toCharArray().let { it shouldEqual it.clone() }
-        a.map { it.toShort() }.toShortArray().let { it shouldEqual it.clone() }
-        a.map { it }.toIntArray().let { it shouldEqual it.clone() }
-        a.map { it.toLong() }.toLongArray().let { it shouldEqual it.clone() }
-        a.map { it.toFloat() }.toFloatArray().let { it shouldEqual it.clone() }
-        a.map { it.toDouble() }.toDoubleArray().let { it shouldEqual it.clone() }
+        a.mapToByteArray().let { it shouldEqual it.clone() }
+        a.mapToCharArray().let { it shouldEqual it.clone() }
+        a.mapToShortArray().let { it shouldEqual it.clone() }
+        a.mapToIntArray().let { it shouldEqual it.clone() }
+        a.mapToLongArray().let { it shouldEqual it.clone() }
+        a.mapToFloatArray().let { it shouldEqual it.clone() }
+        a.mapToDoubleArray().let { it shouldEqual it.clone() }
         booleanArrayOf(true, false).let { it shouldEqual it.clone() }
     }
 
-    @Test fun `array should not equal`() {
+    @Test fun `array should NOT equal`() {
         val a = arrayOf(1, 2, 3)
         val b = arrayOf(3, 4, 5)
         a shouldNotEqual b
-        a.map { it.toByte() }.toByteArray() shouldNotEqual b.map { it.toByte() }.toByteArray()
-        a.map { it.toChar() }.toCharArray() shouldNotEqual b.map { it.toChar() }.toCharArray()
-        a.map { it.toShort() }.toShortArray() shouldNotEqual b.map { it.toShort() }.toShortArray()
-        a.map { it }.toIntArray() shouldNotEqual b.map { it }.toIntArray()
-        a.map { it.toLong() }.toLongArray() shouldNotEqual b.map { it.toLong() }.toLongArray()
-        a.map { it.toFloat() }.toFloatArray() shouldNotEqual b.map { it.toFloat() }.toFloatArray()
-        a.map { it.toDouble() }.toDoubleArray() shouldNotEqual b.map { it.toDouble() }.toDoubleArray()
+        a.mapToByteArray() shouldNotEqual b.mapToByteArray()
+        a.mapToCharArray() shouldNotEqual b.mapToCharArray()
+        a.mapToShortArray() shouldNotEqual b.mapToShortArray()
+        a.mapToIntArray() shouldNotEqual b.mapToIntArray()
+        a.mapToLongArray() shouldNotEqual b.mapToLongArray()
+        a.mapToFloatArray() shouldNotEqual b.mapToFloatArray()
+        a.mapToDoubleArray() shouldNotEqual b.mapToDoubleArray()
         booleanArrayOf(true, false) shouldNotEqual booleanArrayOf(false, true)
     }
+
+    private fun Array<Int>.mapToByteArray() = map { it.toByte() }.toByteArray()
+    private fun Array<Int>.mapToCharArray() = map { it.toChar() }.toCharArray()
+    private fun Array<Int>.mapToShortArray() = map { it.toShort() }.toShortArray()
+    private fun Array<Int>.mapToIntArray() = toIntArray()
+    private fun Array<Int>.mapToLongArray() = map { it.toLong() }.toLongArray()
+    private fun Array<Int>.mapToFloatArray() = map { it.toFloat() }.toFloatArray()
+    private fun Array<Int>.mapToDoubleArray() = map { it.toDouble() }.toDoubleArray()
 
     @Test fun `should be null`() {
         null.shouldBeNull()
