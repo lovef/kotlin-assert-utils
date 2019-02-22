@@ -1,4 +1,6 @@
-apply plugin: 'kotlin'
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.1.2"
+}
 
 dependencies {
     testCompile 'se.lovef:kotlin-assert-utils:0.8.0'

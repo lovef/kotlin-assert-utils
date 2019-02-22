@@ -1,6 +1,9 @@
-apply plugin: 'kotlin'
-apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.1.2"
+    id "org.jetbrains.dokka" version "0.9.17"
+    id "com.jfrog.bintray" version "1.8.0"
+    id "maven-publish"
+}
 
 description = "Kotlin JUnit 4 Assert Utilities"
 
