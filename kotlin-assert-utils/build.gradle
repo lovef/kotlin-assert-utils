@@ -20,16 +20,14 @@ task sourceJar(type: Jar) {
     from sourceSets.main.allSource
 }
 
-sourceSets {
-    javadoc { resources { srcDir 'src/main/javadoc' } }
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
 }
 
-/** Creates a javadoc jar with README to comply with Sonatypes requirements:
- * http://central.sonatype.org/pages/requirements.html */
-//noinspection GroovyAssignabilityCheck,GrUnresolvedAccess
-task javadocJar(type: Jar, dependsOn: javadoc) {
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
     classifier = 'javadoc'
-    from sourceSets.javadoc.output
+    from "$buildDir/javadoc"
 }
 
 def info = [
