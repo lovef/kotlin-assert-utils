@@ -9,6 +9,8 @@ import org.junit.Test
  * Date: 2017-11-25
  * @author Love
  */
+@Suppress("DEPRECATION")
+@Deprecated("Deprecated and planed to be removed in version 1.0")
 class ThrowsAssertUtilKtTest {
 
     @Test fun `throws throw exception if nothing is thrown`() {
