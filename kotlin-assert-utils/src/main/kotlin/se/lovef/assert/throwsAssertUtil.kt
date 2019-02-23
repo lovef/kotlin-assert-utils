@@ -27,7 +27,7 @@ inline infix fun <reified T : Throwable> (() -> Any?).throws(throwableType: KCla
 /** `{ foo() } throws exception` asserts that invoking `foo()` throws the throwable instance `exception`
  *
  * Rethrows unexpectedly thrown throwable. Throws [NotThrownError] if nothing was thrown. */
-inline infix fun <reified T : Throwable> (() -> Any?).throws(expected: T): T {
+infix fun <T : Throwable> (() -> Any?).throws(expected: T): T {
     try {
         invoke()
     } catch (thrown: Throwable) {
@@ -42,3 +42,4 @@ inline infix fun <reified T : Throwable> (() -> Any?).throws(expected: T): T {
 
 /** Indicates that expected throwable was never thrown */
 class NotThrownError(message: String) : AssertionFailedError(message)
+

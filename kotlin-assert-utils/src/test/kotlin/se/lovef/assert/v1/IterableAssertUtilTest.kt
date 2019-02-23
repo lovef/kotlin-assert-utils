@@ -1,6 +1,7 @@
 package se.lovef.assert.v1
 
 import org.junit.Test
+import se.lovef.assert.throws
 import se.lovef.assert.v1.check.IterableCheck
 
 /**
