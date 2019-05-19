@@ -1,10 +1,10 @@
 plugins {
-    id 'se.lovef.git-version' version '0.2.3'
+    id 'se.lovef.git-version' version '0.3.3'
 }
 
 group 'se.lovef'
 
-version gitVersion('0.8')
+version gitVersion('0.9')
 
 allprojects {
     version = rootProject.version
