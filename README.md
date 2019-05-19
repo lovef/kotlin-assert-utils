@@ -46,6 +46,8 @@ class ExampleTest {
         { listOf(1, 2, 3) shouldEqual intArrayOf(1, 2, 3) }
             .throws(Error::class)
             .message shouldContain "<ArrayList> [1, 2, 3]" shouldContain "<int[]> [1, 2, 3]"
+
+        listOf(1, 3, 5) shouldAll { it % 2 shouldEqual 1 }
     }
 }
 ```
@@ -53,10 +55,12 @@ class ExampleTest {
 ## Setup
 
 ```gradle
-apply plugin: 'kotlin'
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.1.2"
+}
 
 dependencies {
-    testCompile 'se.lovef:kotlin-assert-utils:0.8.0'
+    testCompile 'se.lovef:kotlin-assert-utils:0.9.0'
 }
 
 repositories {
