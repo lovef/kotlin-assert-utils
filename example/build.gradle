@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    testCompile 'se.lovef:kotlin-assert-utils:0.8.0'
+    testCompile 'se.lovef:kotlin-assert-utils:0.9.0'
 }
 
 repositories {
