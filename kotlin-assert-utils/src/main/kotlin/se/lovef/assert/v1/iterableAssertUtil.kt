@@ -23,13 +23,13 @@ infix fun <E> Iterable<E>?.shouldNotContain(element: E): Iterable<E>? {
     return this
 }
 
-fun <E: Any?, T: Iterable<E>> T.shouldBeEmpty() = apply {
+fun <E : Any?, T : Iterable<E>> T.shouldBeEmpty() = apply {
     if (this is Collection<*> && this.isNotEmpty() || this.iterator().hasNext()) {
         throw AssertionError("Expected to be empty:\n$this")
     }
 }
 
-fun <E: Any?, T: Iterable<E>> T?.shouldNotBeEmpty() = apply {
+fun <E : Any?, T : Iterable<E>> T?.shouldNotBeEmpty() = apply {
     if (this == null || this is Collection<*> && this.isEmpty() || !this.iterator().hasNext()) {
         throw AssertionError("Expected to NOT be empty:\n$this")
     }
@@ -77,3 +77,30 @@ fun <E> iterableCheck(vararg elementChecks: (E) -> Unit) = IterableCheck(*elemen
 
 /** Creates an [IterableCheck] */
 fun <E> listCheck(vararg elementChecks: (E) -> Unit) = IterableCheck(*elementChecks)
+
+inline infix fun <E, T : Iterable<E>> T.shouldAll(assertion: (E) -> Unit) = apply {
+    var firstError: Throwable? = null
+    val failed = ArrayList<E>()
+    for (it in this) {
+        try {
+            assertion.invoke(it)
+        } catch (t: Throwable) {
+            if (firstError == null) {
+                firstError = t
+            }
+            failed += it
+            if (failed.size > 10) {
+                break
+            }
+        }
+    }
+    if (firstError != null) {
+        val failedString = failed.take(10).joinToString()
+        val message = if (failed.size > 10) {
+            "Failed for more than 10 elements, starting with $failedString"
+        } else {
+            "Failed for ${failed.size} elements: $failedString"
+        }
+        throw AssertionError(message, firstError)
+    }
+}
