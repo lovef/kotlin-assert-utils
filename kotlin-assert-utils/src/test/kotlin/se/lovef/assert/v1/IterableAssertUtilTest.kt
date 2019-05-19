@@ -10,28 +10,31 @@ import se.lovef.assert.v1.check.IterableCheck
 class IterableAssertUtilTest {
 
     object TestType {
-        fun testFun() { }
+        fun testFun() {}
     }
 
-    class TestIterable<out E>(vararg elements: E) : Iterable<E> {
-        private val elements = elements.asList()
+    class TestIterable<out E>(private val elements: Iterable<E>) : Iterable<E> {
+        constructor(vararg elements: E) : this(elements.toList())
+
         override fun iterator() = elements.iterator()
+        fun testIterableFunction() {}
     }
 
     interface IterableCreator {
-        fun <E> iterable(vararg elements: E): Iterable<E>
+        fun <E> iterable(vararg elements: E) = iterableFrom(elements.toList())
+        fun <E> iterableFrom(iterable: Iterable<E>): Iterable<E>
     }
 
     class SetCreator : IterableCreator {
-        override fun <E> iterable(vararg elements: E) = setOf(*elements)
+        override fun <E> iterableFrom(iterable: Iterable<E>) = iterable.toSet()
     }
 
     class ListCreator : IterableCreator {
-        override fun <E> iterable(vararg elements: E) = listOf(*elements)
+        override fun <E> iterableFrom(iterable: Iterable<E>) = iterable.toList()
     }
 
     class TestIterableCreator : IterableCreator {
-        override fun <E> iterable(vararg elements: E) = TestIterable(*elements)
+        override fun <E> iterableFrom(iterable: Iterable<E>) = TestIterable(iterable)
     }
 
     private val iterableCreators = listOf(
@@ -108,6 +111,74 @@ class IterableAssertUtilTest {
     @Test fun `check iterable aliases`() {
         iterableCheck<Any>({}) typeIs IterableCheck::class
         listCheck<Any>({}) typeIs IterableCheck::class
+    }
+
+    @Test fun `should all happy case`() {
+        iterableCreators.forEach { iterableCreator ->
+            iterableCreator.iterable(1, 2, 3) shouldAll { it shouldEqual it }
+        }
+    }
+
+    @Test fun `should all gives one error`() {
+        iterableCreators.forEach { iterableCreator ->
+            val toBeThrown = Exception("To throw");
+            {
+                iterableCreator.iterable('a', 'b', 'c', 'd') shouldAll { if (it == 'c') throw toBeThrown }
+            }.throws(AssertionError::class).also {
+                it.message shouldContain 1 shouldContain 'c'
+                it.cause shouldBe toBeThrown
+            }
+        }
+    }
+
+    @Test fun `should all gives a few errors`() {
+        iterableCreators.forEach { iterableCreator ->
+            val firstThrown = Exception("first")
+            val secondThrow = Exception("second");
+            {
+                iterableCreator.iterable('a', 'b', 'c') shouldAll {
+                    if (it == 'b') throw firstThrown
+                    if (it == 'c') throw secondThrow
+                }
+            }.throws(AssertionError::class).also {
+                it.message shouldContain 2 shouldContain "b, c"
+                it.cause shouldBe firstThrown
+            }
+        }
+    }
+
+    @Test fun `should all gives 10 errors`() {
+        iterableCreators.forEach { iterableCreator ->
+            val toBeThrown = Exception("To throw");
+            {
+                iterableCreator.iterableFrom(1..10) shouldAll { throw toBeThrown }
+            }.throws(AssertionError::class).also {
+                it.message shouldContain 10 shouldContain (1..10).joinToString()
+                it.cause shouldBe toBeThrown
+            }
+        }
+    }
+
+    @Test fun `should all gives more than 10 errors`() {
+        iterableCreators.forEach { iterableCreator ->
+            val toBeThrown = Exception("To throw");
+            {
+                iterableCreator.iterableFrom(1..20) shouldAll { throw toBeThrown }
+            }.throws(AssertionError::class).also {
+                it.message shouldContain "more than 10" shouldContain (1..10).joinToString()
+                it.cause shouldBe toBeThrown
+            }
+        }
+    }
+
+    @Test fun `should all returns the iterable`() {
+        iterableCreators.map { it.iterable(1..10) }.shouldAll {
+            it shouldAll { } shouldBe it
+        }
+    }
+
+    @Test fun `should all returns the iterable as the correct type`() {
+        TestIterable(1, 2, 3).shouldAll { }.testIterableFunction()
     }
 }
 
