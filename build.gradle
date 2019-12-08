@@ -4,7 +4,7 @@ plugins {
 
 group 'se.lovef'
 
-version gitVersion('0.9')
+version gitVersion('0.10')
 
 println("Java:     " + JavaVersion.current())
 println("Encoding: " + System.getProperty("file.encoding"))
