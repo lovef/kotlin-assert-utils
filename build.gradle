@@ -6,6 +6,9 @@ group 'se.lovef'
 
 version gitVersion('0.9')
 
+println("Java:     " + JavaVersion.current())
+println("Encoding: " + System.getProperty("file.encoding"))
+
 allprojects {
     version = rootProject.version
     group = rootProject.group
