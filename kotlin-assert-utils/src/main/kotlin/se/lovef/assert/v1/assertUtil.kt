@@ -38,6 +38,7 @@ private fun stringOf(a: Any?) = when (a) {
     is FloatArray -> a.toList().toString()
     is DoubleArray -> a.toList().toString()
     is BooleanArray -> a.toList().toString()
+    is String -> a.toStringLiteral()
     else -> a.toString()
 }
 
