@@ -31,6 +31,8 @@ task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
     from "$buildDir/javadoc"
 }
 
+tasks.check.dependsOn javadocJar
+
 def info = [
         "github": "https://github.com/lovef/kotlin-assert-utils",
         "git"   : "https://github.com/lovef/kotlin-assert-utils.git",
