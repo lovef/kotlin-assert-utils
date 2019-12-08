@@ -15,8 +15,6 @@ import se.lovef.assert.v1.*
 class ExampleTest {
 
     @Test fun `example test`() {
-        this typeIs Any::class
-
         1 shouldEqual 1
         { 1 shouldEqual 2 } throws Error::class
 
@@ -32,7 +30,7 @@ class ExampleTest {
         val exception = Exception()
         ; { throw exception } throws exception
         { { throw exception } throws Exception() } throws exception
-        { {  } throws exception } throws NotThrownError::class
+        { { } throws exception } throws NotThrownError::class
 
         { "1 is 2" proof { 1 shouldEqual 2 } }
             .throws(Error::class)
@@ -45,7 +43,17 @@ class ExampleTest {
 
         { listOf(1, 2, 3) shouldEqual intArrayOf(1, 2, 3) }
             .throws(Error::class)
-            .message shouldContain "<ArrayList> [1, 2, 3]" shouldContain "<int[]> [1, 2, 3]"
+            .message shouldEqual """|
+                |Expected: <int[]> [1, 2, 3]
+                |Got:      <ArrayList> [1, 2, 3]
+                """.trimMargin();
+
+        { 1337 shouldEqual "1337" }
+            .throws(Error::class)
+            .message shouldEqual """|
+                |Expected: "1337"
+                |Got:      1337
+            """.trimMargin()
 
         listOf(1, 3, 5) shouldAll { it % 2 shouldEqual 1 }
     }
@@ -56,11 +64,12 @@ class ExampleTest {
 
 ```gradle
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.1.2"
+    id "org.jetbrains.kotlin.jvm" version "1.3.61"
 }
 
 dependencies {
-    testCompile 'se.lovef:kotlin-assert-utils:0.9.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    testImplementation "se.lovef:kotlin-assert-utils:0.10.1"
 }
 
 repositories {
