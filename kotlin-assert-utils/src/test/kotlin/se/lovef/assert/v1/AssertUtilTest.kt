@@ -15,7 +15,7 @@ class AssertUtilTest {
 
     @Test fun `fail with objects`() {
         errorMessageOf { fail("message: {0} {1} {0}", 0, 1) } shouldEqual "message: 0 1 0"
-        errorMessageOf { fail("message: {0}", "Hello") } shouldEqual "message: Hello"
+        errorMessageOf { fail("message: {0}", "Hello\nWorld") } shouldEqual "message: \"Hello\\nWorld\""
     }
 
     @Test fun `fail with list in message`() {
@@ -53,17 +53,22 @@ class AssertUtilTest {
 
     enum class Foo {
         BAR;
+
         enum class Foo {
             BAR;
         }
     }
 
+    class Wrapper(val obj: Any?) {
+        override fun toString() = obj.toString()
+    }
+
     @Test fun `fail error message includes type when necessary`() {
-        errorMessageOf { fail("{0}, {1}", Foo.BAR, "BAR") } shouldEqual "<Foo> BAR, <String> BAR"
+        errorMessageOf { fail("{0}, {1}", Foo.BAR, Wrapper("BAR")) } shouldEqual "<Foo> BAR, <Wrapper> BAR"
         errorMessageOf { fail("{0}, {1}", Foo.BAR, Foo.Foo.BAR) } shouldEqual "" +
                 "<se.lovef.assert.v1.AssertUtilTest\$Foo> BAR, " +
                 "<se.lovef.assert.v1.AssertUtilTest\$Foo\$Foo> BAR"
-        errorMessageOf { fail("{0}, {1}", null, "null") } shouldEqual "null, <String> null"
+        errorMessageOf { fail("{0}, {1}", null, Wrapper("null")) } shouldEqual "null, <Wrapper> null"
         errorMessageOf { fail("{0}, {1}, {2}", null, Foo.BAR, Foo.Foo.BAR) } shouldEqual "" +
                 "null, " +
                 "<se.lovef.assert.v1.AssertUtilTest\$Foo> BAR, " +
