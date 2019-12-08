@@ -1,13 +1,23 @@
 package se.lovef.example
 
 import org.junit.Test
-import se.lovef.assert.v1.*
+import se.lovef.assert.v1.NotThrownError
+import se.lovef.assert.v1.proof
+import se.lovef.assert.v1.shouldAll
+import se.lovef.assert.v1.shouldBeCloseTo
+import se.lovef.assert.v1.shouldBeLessThan
+import se.lovef.assert.v1.shouldBeNull
+import se.lovef.assert.v1.shouldBeTrue
+import se.lovef.assert.v1.shouldContain
+import se.lovef.assert.v1.shouldEqual
+import se.lovef.assert.v1.shouldNotBeEmpty
+import se.lovef.assert.v1.shouldNotBeNull
+import se.lovef.assert.v1.shouldNotContain
+import se.lovef.assert.v1.throws
 
 class ExampleTest {
 
     @Test fun `example test`() {
-        this typeIs Any::class
-
         1 shouldEqual 1
         { 1 shouldEqual 2 } throws Error::class
 
@@ -23,7 +33,7 @@ class ExampleTest {
         val exception = Exception()
         ; { throw exception } throws exception
         { { throw exception } throws Exception() } throws exception
-        { {  } throws exception } throws NotThrownError::class
+        { { } throws exception } throws NotThrownError::class
 
         { "1 is 2" proof { 1 shouldEqual 2 } }
             .throws(Error::class)
@@ -36,7 +46,17 @@ class ExampleTest {
 
         { listOf(1, 2, 3) shouldEqual intArrayOf(1, 2, 3) }
             .throws(Error::class)
-            .message shouldContain "<ArrayList> [1, 2, 3]" shouldContain "<int[]> [1, 2, 3]"
+            .message shouldEqual """|
+                |Expected: <int[]> [1, 2, 3]
+                |Got:      <ArrayList> [1, 2, 3]
+                """.trimMargin();
+
+        { 1337 shouldEqual "1337" }
+            .throws(Error::class)
+            .message shouldEqual """|
+                |Expected: "1337"
+                |Got:      1337
+            """.trimMargin()
 
         listOf(1, 3, 5) shouldAll { it % 2 shouldEqual 1 }
     }
