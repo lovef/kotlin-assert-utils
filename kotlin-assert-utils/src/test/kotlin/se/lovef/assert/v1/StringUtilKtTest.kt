@@ -18,9 +18,11 @@ class StringUtilKtTest {
         listOf(
             "abc" to "\"abc\"",
             "\"abc\"" to "\"\\\"abc\\\"\"",
-            "abc\ndef" to "\"abc\\ndef\"",
-            "abc\tdef" to "\"abc\\tdef\"",
-            "abc\$def" to "\"abc\\\$def\"",
+            " \n " to "\" \\n \"",
+            " \r " to "\" \\r \"",
+            " \t " to "\" \\t \"",
+            " \$ " to "\" \\\$ \"",
+            " \u00a0 " to "\" \\u00a0 \"",
             "\"\n\t\$\"\n\t\$" to "\"\\\"\\n\\t\\\$\\\"\\n\\t\\\$\""
         ) shouldAll { (input, output) ->
             input.toStringLiteral() shouldEqual output
