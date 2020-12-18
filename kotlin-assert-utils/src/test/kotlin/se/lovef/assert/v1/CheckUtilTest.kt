@@ -1,6 +1,7 @@
 package se.lovef.assert.v1
 
 import org.junit.Test
+import se.lovef.assert.throws
 
 /**
  * Date: 2017-12-03

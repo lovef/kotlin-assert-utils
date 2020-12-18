@@ -4,6 +4,8 @@ import junit.framework.TestCase
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.IsInstanceOf
 import org.junit.Test
+import se.lovef.assert.v1.shouldBe
+import se.lovef.assert.v1.shouldEqual
 
 /**
  * Date: 2017-11-25
@@ -25,8 +27,8 @@ class ThrowsAssertUtilKtTest {
 
     @Test fun `throws type`() {
         val exception = SpecialException();
-        { throw exception } throws SpecialException::class referenceIsEqualTo exception
-        { throw exception }.throws(SpecialException::class).specialValue isEqualTo exception.specialValue
+        { throw exception } throws SpecialException::class shouldBe exception
+        { throw exception }.throws(SpecialException::class).specialValue shouldEqual exception.specialValue
         { throw exception } throws Throwable::class
 
         { { } throws Error::class } throws NotThrownError::class
@@ -38,7 +40,7 @@ class ThrowsAssertUtilKtTest {
         val thrown = SpecialException();
         { { throw thrown } throws OtherException::class }
             .throws(SpecialException::class)
-            .isEqualTo(thrown)
+            .shouldEqual(thrown)
     }
 
     private fun throwException(exception: Exception) {
@@ -49,7 +51,7 @@ class ThrowsAssertUtilKtTest {
         val exception = Exception()
         ;{ throwException(exception) }
             .throws(exception)
-            .referenceIsEqualTo(exception)
+            .shouldBe(exception)
     }
 
     @Test fun `throws wrong instance`() {
@@ -57,7 +59,7 @@ class ThrowsAssertUtilKtTest {
         val expectedException = Exception()
         ; { { throwException(thrownException) } throws expectedException }
             .throws(Exception::class)
-            .referenceIsEqualTo(thrownException)
+            .shouldBe(thrownException)
     }
 
     @Test fun `throws instance throws exception if nothing is thrown`() {
